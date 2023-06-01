@@ -19,6 +19,7 @@ namespace ExcelCommander.Base.Serialization
             using (BinaryWriter writer = new BinaryWriter(stream, Encoding.UTF8, false))
             {
                 WriteToStream(writer, this);
+                stream.Close(); // Force flush
                 return memory.ToArray();
             }
         }
@@ -26,7 +27,7 @@ namespace ExcelCommander.Base.Serialization
         {
             using (MemoryStream memory = new MemoryStream(data, 0, length))
             using (LZ4DecoderStream source = LZ4Stream.Decode(memory))
-            using (BinaryReader reader = new BinaryReader(memory, Encoding.UTF8, false))
+            using (BinaryReader reader = new BinaryReader(source, Encoding.UTF8, false))
                 return ReadFromStream(reader);
         }
         #endregion
