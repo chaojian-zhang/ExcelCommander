@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Console = Colorful.Console;
 
 namespace ExcelCommander.Base.Network
 {
@@ -73,7 +72,7 @@ namespace ExcelCommander.Base.Network
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message, Color.Red);
+                    Console.WriteLine(e.Message);
                 }
             }
         }
@@ -99,7 +98,7 @@ namespace ExcelCommander.Base.Network
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message, Color.Red);
+                    Console.WriteLine(e.Message);
                 }
             }
         }
