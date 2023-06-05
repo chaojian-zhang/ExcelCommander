@@ -11,12 +11,15 @@ namespace ExcelCommander.Services
     {
         public void Execute(string[] commands, bool interpretIfNull = true)
         {
-            foreach (var command in commands)
-                ExecuteCommand(command);
             if (commands == null && interpretIfNull)
             {
                 string input = Console.ReadLine();
                 ExecuteCommand(input);
+            }
+            else
+            {
+                foreach (var command in commands)
+                    ExecuteCommand(command);
             }
         }
         public abstract void ExecuteCommand(string command);

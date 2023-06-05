@@ -28,7 +28,15 @@ namespace ExcelCommander.Base.Network
         #region Lifetime
         public void Dispose()
         {
-            Socket.Shutdown(SocketShutdown.Both);
+            try
+            {
+                Socket.Shutdown(SocketShutdown.Both);
+            }
+            catch (Exception){}
+            finally
+            {
+                Socket.Dispose();
+            }
         }
         #endregion
 
@@ -49,13 +57,17 @@ namespace ExcelCommander.Base.Network
             Socket.Listen(100);
             new Thread(() =>
             {
-                while (true)
+                try
                 {
-                    var client = Socket.Accept();
-                    Console.WriteLine("New client is connected.");
-                    clients.Add(client);
-                    new Thread(() => ServerHandleClient(client)).Start();
+                    while (true)
+                    {
+                        var client = Socket.Accept();
+                        Console.WriteLine("New client is connected.");
+                        clients.Add(client);
+                        new Thread(() => ServerHandleClient(client)).Start();
+                    }
                 }
+                catch (Exception){}
             }).Start();
             return servicePort;
 

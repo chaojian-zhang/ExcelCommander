@@ -9,17 +9,16 @@ namespace ExcelCommander.Addin
 
         #region Properties
         public int ServicePort { get; private set; }
-        public Server Server { get; private set; }
         #endregion
 
         #region Service Control
         private void startButton_Click(object sender, RibbonControlEventArgs e)
         {
-            Server = new Server(data => {
+            ThisAddIn.Server = new Server(data => {
                 CommandHandler handler = new CommandHandler();
                 return handler.Handle(data);
             });
-            ServicePort = Server.Start();
+            ServicePort = ThisAddIn.Server.Start();
             statusLabel.Label = $"Service active on: {ServicePort}";
 
             startButton.Enabled = false;
@@ -28,7 +27,7 @@ namespace ExcelCommander.Addin
 
         private void stopButton_Click(object sender, RibbonControlEventArgs e)
         {
-            Server.Stop();
+            ThisAddIn.Server.Stop();
             statusLabel.Label = "Service stopped.";
 
             startButton.Enabled = true;
