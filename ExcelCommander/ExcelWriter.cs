@@ -1,7 +1,34 @@
-﻿namespace ExcelCommander
+﻿using ExcelCommander.Base;
+
+namespace ExcelCommander
 {
     public class ExcelWriter
     {
+        #region Construction
+        public ExcelWriter(string outputFile)
+        {
+            OutputFile = outputFile;
+        }
+        public string OutputFile { get; }
+        #endregion
+
+        #region State
+
+        #endregion
+
+        #region Interface
+        internal void EvaluateCommand(string command)
+        {
+            string[] parameters = command.SplitParameters();
+            switch (parameters.First())
+            {
+                default:
+                    break;
+            }
+        }
+        #endregion
+
+        #region Methods
         public void Spawn()
         {
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
@@ -19,5 +46,6 @@
             worksheet.Cells[2, 2] = 2;
             worksheet.Cells[2, 3].Formula = "=SUM(A2,B2)";
         }
+        #endregion
     }
 }

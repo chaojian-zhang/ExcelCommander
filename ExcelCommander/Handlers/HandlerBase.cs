@@ -1,18 +1,15 @@
 ﻿using ExcelCommander.Base.ClientServer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExcelCommander.Services
 {
     internal sealed class StandaloneUse
     {
+        public ExcelWriter Writer { get; }
         public string OutputFile { get; }
         public StandaloneUse(string outputFile)
         {
             OutputFile = outputFile;
+            Writer = new ExcelWriter(outputFile);
 
             Console.WriteLine($"Write to file {outputFile}.");
         }
@@ -20,9 +17,12 @@ namespace ExcelCommander.Services
         {
             if (commands == null && interpretIfNull)
             {
-                Console.Write("> ");
-                string input = Console.ReadLine();
-                ExecuteCommand(input);
+                while (true)
+                {
+                    Console.Write("> ");
+                    string input = Console.ReadLine();
+                    ExecuteCommand(input);
+                }
             }
             else
             {
@@ -32,7 +32,7 @@ namespace ExcelCommander.Services
         }
         public void ExecuteCommand(string command)
         {
-            throw new NotImplementedException();
+            Writer.EvaluateCommand(command);
         }
     }
 
@@ -64,15 +64,19 @@ namespace ExcelCommander.Services
         {
             if (commands == null && interpretIfNull)
             {
-                Console.Write("> ");
-                string input = Console.ReadLine();
-                ExecuteCommand(input);
+                while (true)
+                {
+                    Console.Write("> ");
+                    string input = Console.ReadLine();
+                    ExecuteCommand(input);
+                }
             }
             else
             {
                 foreach (var command in commands)
                     ExecuteCommand(command);
             }
+            Dispose();
         }
         public void ExecuteCommand(string command)
         {
