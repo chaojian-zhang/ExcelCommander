@@ -6,13 +6,23 @@ using System.Net.Sockets;
 using System.Threading;
 using Console = Colorful.Console;
 
-namespace ExcelCommander.Base
+namespace ExcelCommander.Base.Network
 {
+    public static class TcpHelper
+    {
+        public static int FindAvailablePort()
+        {
+            TcpListener listener = new TcpListener(IPAddress.Loopback, 0);
+            listener.Start();
+            int port = ((IPEndPoint)listener.LocalEndpoint).Port;
+            listener.Stop();
+            return port;
+        }
+    }
     public class BidirectionalServerClient : IDisposable
     {
         #region Config
         public static readonly string HostAddress = "127.0.0.1";
-        public const int ServicePort = 12900; // TODO: Remark-cz: Automatically find a new port and report it, so we can interface with multiple excel instances
         public const int BufferSize = 64 * 1024 * 1024; // 64 Mb
         #endregion
 
@@ -28,12 +38,13 @@ namespace ExcelCommander.Base
         #endregion
 
         #region Entry
-        public void StartServer(Action<int, byte[], Socket> callback)
+        public int StartServer(Action<int, byte[], Socket> callback)
         {
             List<Socket> clients = new List<Socket>();
 
+            int servicePort = TcpHelper.FindAvailablePort();
             IPHostEntry entry = Dns.GetHostEntry(HostAddress);
-            IPEndPoint endpoint = new IPEndPoint(entry.AddressList[0], ServicePort);
+            IPEndPoint endpoint = new IPEndPoint(entry.AddressList[0], servicePort);
             Socket = new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             Socket.Bind(endpoint);
             Socket.Listen(100);
@@ -47,6 +58,7 @@ namespace ExcelCommander.Base
                     new Thread(() => ServerHandleClient(client)).Start();
                 }
             }).Start();
+            return servicePort;
 
             void ServerHandleClient(Socket client)
             {
@@ -65,10 +77,10 @@ namespace ExcelCommander.Base
                 }
             }
         }
-        public Socket StartClient(Action<int, byte[]> callback)
+        public Socket StartClient(int servicePort, Action<int, byte[]> callback)
         {
             IPHostEntry entry = Dns.GetHostEntry(HostAddress);
-            IPEndPoint endpoint = new IPEndPoint(entry.AddressList[0], ServicePort);
+            IPEndPoint endpoint = new IPEndPoint(entry.AddressList[0], servicePort);
             Socket = new Socket(endpoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             Socket.Connect(endpoint);
             new Thread(() => ClientReceiveMessage(Socket)).Start();
