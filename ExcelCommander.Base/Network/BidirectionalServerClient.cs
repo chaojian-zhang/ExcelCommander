@@ -88,11 +88,18 @@ namespace ExcelCommander.Base.Network
 
             void ClientReceiveMessage(Socket socket)
             {
-                while (true)
+                try
                 {
-                    byte[] buffer = new byte[BufferSize];
-                    var size = socket.Receive(buffer);
-                    callback(size, buffer);
+                    while (true)
+                    {
+                        byte[] buffer = new byte[BufferSize];
+                        var size = socket.Receive(buffer);
+                        callback(size, buffer);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message, Color.Red);
                 }
             }
         }

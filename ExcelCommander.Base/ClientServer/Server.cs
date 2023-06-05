@@ -25,6 +25,10 @@ namespace ExcelCommander.Base.ClientServer
             ServicePort = Service.StartServer((length, data, client) => Callback(length, data, client));
             return ServicePort;
         }
+        public void Stop()
+        {
+            Service.Dispose();
+        }
         #endregion
 
         #region Data Marshal

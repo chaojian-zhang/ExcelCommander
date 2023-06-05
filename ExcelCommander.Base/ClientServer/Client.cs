@@ -32,6 +32,10 @@ namespace ExcelCommander.Base.ClientServer
         {
             ClientInstance.Send(ServerReference, data.Serialize());
         }
+        public void Close()
+        {
+            ServerReference.Close();
+        }
         #endregion
 
         #region Data Marshal

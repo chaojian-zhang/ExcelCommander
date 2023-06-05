@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCommander", "ExcelCommander\ExcelCommander.csproj", "{699DEF68-BA7A-4425-8932-CC156D0E5464}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{7F6F800A-6B07-4DEA-87D4-BCFFD4EEC560}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "REPL", "REPL", "{A0869E4D-5EA0-4190-B897-6F5870696463}"
@@ -18,13 +16,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ManualTest", "ManualTest", "{85EB5E02-BF70-4628-ADE9-79FEB0C3EFA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetupTest", "SetupTest\SetupTest.csproj", "{7700A1B8-A912-409D-8366-733785948B68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetupTest", "SetupTest\SetupTest.csproj", "{7700A1B8-A912-409D-8366-733785948B68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCommander.Base", "ExcelCommander.Base\ExcelCommander.Base.csproj", "{FBA7A348-0815-4A9F-94AD-C6F48C66E13A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelCommander.Base", "ExcelCommander.Base\ExcelCommander.Base.csproj", "{FBA7A348-0815-4A9F-94AD-C6F48C66E13A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UniTtests", "UniTtests", "{EE00AE4B-2FF7-43C6-8ED3-6B04B9CBC34E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCommanderUnitTests", "ExcelCommanderUnitTests\ExcelCommanderUnitTests.csproj", "{91F85232-CB84-447E-8105-85E738389F4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelCommanderUnitTests", "ExcelCommanderUnitTests\ExcelCommanderUnitTests.csproj", "{91F85232-CB84-447E-8105-85E738389F4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCommander.Addin", "ExcelCommander.Addin\ExcelCommander.Addin.csproj", "{81404D40-E09E-46B5-97FB-6A03A68E5378}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCommander", "ExcelCommander\ExcelCommander.csproj", "{F736F827-AC05-4BBD-8CCD-656350E04FF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +34,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{699DEF68-BA7A-4425-8932-CC156D0E5464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{699DEF68-BA7A-4425-8932-CC156D0E5464}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{699DEF68-BA7A-4425-8932-CC156D0E5464}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{699DEF68-BA7A-4425-8932-CC156D0E5464}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7700A1B8-A912-409D-8366-733785948B68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7700A1B8-A912-409D-8366-733785948B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7700A1B8-A912-409D-8366-733785948B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,15 +46,24 @@ Global
 		{91F85232-CB84-447E-8105-85E738389F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91F85232-CB84-447E-8105-85E738389F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91F85232-CB84-447E-8105-85E738389F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81404D40-E09E-46B5-97FB-6A03A68E5378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81404D40-E09E-46B5-97FB-6A03A68E5378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81404D40-E09E-46B5-97FB-6A03A68E5378}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81404D40-E09E-46B5-97FB-6A03A68E5378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F736F827-AC05-4BBD-8CCD-656350E04FF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F736F827-AC05-4BBD-8CCD-656350E04FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F736F827-AC05-4BBD-8CCD-656350E04FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F736F827-AC05-4BBD-8CCD-656350E04FF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{699DEF68-BA7A-4425-8932-CC156D0E5464} = {7F6F800A-6B07-4DEA-87D4-BCFFD4EEC560}
 		{7700A1B8-A912-409D-8366-733785948B68} = {85EB5E02-BF70-4628-ADE9-79FEB0C3EFA8}
 		{FBA7A348-0815-4A9F-94AD-C6F48C66E13A} = {7F6F800A-6B07-4DEA-87D4-BCFFD4EEC560}
 		{91F85232-CB84-447E-8105-85E738389F4E} = {EE00AE4B-2FF7-43C6-8ED3-6B04B9CBC34E}
+		{81404D40-E09E-46B5-97FB-6A03A68E5378} = {75FBB7B3-376E-4D76-9DC4-3EA1EA75EE17}
+		{F736F827-AC05-4BBD-8CCD-656350E04FF3} = {A0869E4D-5EA0-4190-B897-6F5870696463}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2058E876-48D3-4FE9-963D-F1A6822D31F1}
