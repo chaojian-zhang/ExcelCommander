@@ -7,7 +7,7 @@ namespace ExcelCommander.Base
 {
     public static class StringHelper
     {
-        public static string[] SplitParameters(this string inputString)
+        public static string[] SplitParameters(this string inputString, bool includeQuotesInString = false)
         {
             List<string> parameters = new List<string>();
             StringBuilder current = new StringBuilder();
@@ -19,6 +19,8 @@ namespace ExcelCommander.Base
                 {
                     case '"':
                         inQuotes = !inQuotes;
+                        if (includeQuotesInString)
+                            current.Append(c);
                         break;
                     case ' ':
                         if (!inQuotes)
