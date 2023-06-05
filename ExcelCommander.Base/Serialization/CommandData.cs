@@ -1,5 +1,4 @@
-﻿using K4os.Compression.LZ4.Streams;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace ExcelCommander.Base.Serialization
@@ -15,19 +14,16 @@ namespace ExcelCommander.Base.Serialization
         public byte[] Serialize()
         {
             using (MemoryStream memory = new MemoryStream())
-            using (LZ4EncoderStream stream = LZ4Stream.Encode(memory))
-            using (BinaryWriter writer = new BinaryWriter(stream, Encoding.UTF8, false))
+            using (BinaryWriter writer = new BinaryWriter(memory, Encoding.UTF8, false))
             {
                 WriteToStream(writer, this);
-                stream.Close(); // Force flush
                 return memory.ToArray();
             }
         }
         public static CommandData Deserialize(byte[] data, int length)
         {
             using (MemoryStream memory = new MemoryStream(data, 0, length))
-            using (LZ4DecoderStream source = LZ4Stream.Decode(memory))
-            using (BinaryReader reader = new BinaryReader(source, Encoding.UTF8, false))
+            using (BinaryReader reader = new BinaryReader(memory, Encoding.UTF8, false))
                 return ReadFromStream(reader);
         }
         #endregion
