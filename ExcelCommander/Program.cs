@@ -23,7 +23,14 @@ namespace ExcelCommander
 
             if (int.TryParse(target, out int port))
             {
-                new SocketUse(port).Execute(scriptLines);
+                try
+                {
+                    new SocketUse(port).Execute(scriptLines);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error: {e}");
+                }
             }
             else if (Path.GetExtension(target) == ".xlsx")
             {

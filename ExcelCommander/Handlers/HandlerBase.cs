@@ -7,12 +7,20 @@ using System.Threading.Tasks;
 
 namespace ExcelCommander.Services
 {
-    internal abstract class HandlerBase
+    internal sealed class StandaloneUse
     {
+        public string OutputFile { get; }
+        public StandaloneUse(string outputFile)
+        {
+            OutputFile = outputFile;
+
+            Console.WriteLine($"Write to file {outputFile}.");
+        }
         public void Execute(string[] commands, bool interpretIfNull = true)
         {
             if (commands == null && interpretIfNull)
             {
+                Console.Write("> ");
                 string input = Console.ReadLine();
                 ExecuteCommand(input);
             }
@@ -22,50 +30,57 @@ namespace ExcelCommander.Services
                     ExecuteCommand(command);
             }
         }
-        public abstract void ExecuteCommand(string command);
-    }
-
-    internal sealed class StandaloneUse : HandlerBase
-    {
-        public string OutputFile { get; }
-        public StandaloneUse(string outputFile)
-        {
-            OutputFile = outputFile;
-        }
-
-        public override void ExecuteCommand(string command)
+        public void ExecuteCommand(string command)
         {
             throw new NotImplementedException();
         }
     }
 
-    internal sealed class SocketUse: HandlerBase, IDisposable
+    internal sealed class SocketUse: IDisposable
     {
         #region Construction
         private int Port { get; }
-        private Client Client { get; }
+        private Client Client { get; set; }
         public SocketUse(int port)
         {
             Port = port;
 
-            Client = new Client(port, data => null);
+            Client = new Client(Port, data => null);
             Client.Start();
+
+            Console.WriteLine($"Service started at port {Port}.");
         }
         #endregion
 
         #region Disposal
-
-        #endregion
-
-        #region Handling
-        public override void ExecuteCommand(string command)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Dispose()
         {
             Client.Close();
+        }
+        #endregion
+
+        #region Handling
+        public void Execute(string[] commands, bool interpretIfNull = true)
+        {
+            if (commands == null && interpretIfNull)
+            {
+                Console.Write("> ");
+                string input = Console.ReadLine();
+                ExecuteCommand(input);
+            }
+            else
+            {
+                foreach (var command in commands)
+                    ExecuteCommand(command);
+            }
+        }
+        public void ExecuteCommand(string command)
+        {
+            Client.Send(new Base.Serialization.CommandData
+            {
+                CommandType = "Development",
+                Contents = command
+            });
         }
         #endregion
     }
