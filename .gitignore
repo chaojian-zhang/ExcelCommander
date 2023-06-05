@@ -362,4 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+# Custom debugging project
 SetupTest
+# Launch settings
+launchSettings.json
