@@ -1,4 +1,5 @@
 ﻿using ExcelCommander.Base.ClientServer;
+using ExcelCommander.Base.Serialization;
 
 namespace ExcelCommander
 {
@@ -46,11 +47,23 @@ namespace ExcelCommander
         }
         public void ExecuteCommand(string command)
         {
-            Client.Send(new Base.Serialization.CommandData
+            if (command.StartsWith("Get"))
             {
-                CommandType = "Development",
-                Contents = command
-            });
+                CommandData reply = Client.SendAndReceive(new CommandData
+                {
+                    CommandType = "Development",
+                    Contents = command
+                });
+                Console.WriteLine($"[{reply.CommandType}] {reply.Contents}");
+            }
+            else
+            {
+                Client.Send(new CommandData
+                {
+                    CommandType = "Development",
+                    Contents = command
+                });
+            }
         }
         #endregion
     }

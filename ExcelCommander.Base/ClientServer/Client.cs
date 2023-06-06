@@ -8,7 +8,7 @@ namespace ExcelCommander.Base.ClientServer
     public class Client
     {
         #region Internal Data
-        private BidirectionalServerClient ClientInstance;
+        private UnidirectionalClient ClientInstance;
         private Socket ServerReference;
         private Func<CommandData, CommandData> CommandHandler;
         private int ServicePort;
@@ -25,31 +25,21 @@ namespace ExcelCommander.Base.ClientServer
         #region Method
         public void Start()
         {
-            ClientInstance = new BidirectionalServerClient();
-            ServerReference = ClientInstance.StartClient(ServicePort, (length, data) => Callback(length, data));
+            ClientInstance = new UnidirectionalClient();
+            ServerReference = ClientInstance.StartClient(ServicePort);
         }
         public void Send(CommandData data)
         {
             ClientInstance.Send(ServerReference, data.Serialize());
         }
+        public CommandData SendAndReceive(CommandData data)
+        {
+            ClientInstance.SendAndReceive(ServerReference, data.Serialize(), out byte[] replyData, out int replyLength);
+            return CommandData.Deserialize(replyData, replyLength);
+        }
         public void Close()
         {
             ServerReference.Close();
-        }
-        #endregion
-
-        #region Data Marshal
-        private void Callback(int length, byte[] data)
-        {
-            try
-            {
-                CommandData reply = CommandData.Deserialize(data, length);
-                CommandHandler?.Invoke(reply);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error: {e.Message}");
-            }
         }
         #endregion
     }

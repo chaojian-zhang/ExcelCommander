@@ -26,7 +26,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelCommanderUnitTests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCommander.Addin", "ExcelCommander.Addin\ExcelCommander.Addin.csproj", "{81404D40-E09E-46B5-97FB-6A03A68E5378}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelCommander", "ExcelCommander\ExcelCommander.csproj", "{F736F827-AC05-4BBD-8CCD-656350E04FF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelCommander", "ExcelCommander\ExcelCommander.csproj", "{F736F827-AC05-4BBD-8CCD-656350E04FF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XlsxCommander", "XlsxCommander\XlsxCommander.csproj", "{BDBA08DC-2B87-4D90-BDEC-A39E4B875AC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{F736F827-AC05-4BBD-8CCD-656350E04FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F736F827-AC05-4BBD-8CCD-656350E04FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F736F827-AC05-4BBD-8CCD-656350E04FF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDBA08DC-2B87-4D90-BDEC-A39E4B875AC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDBA08DC-2B87-4D90-BDEC-A39E4B875AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDBA08DC-2B87-4D90-BDEC-A39E4B875AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDBA08DC-2B87-4D90-BDEC-A39E4B875AC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{91F85232-CB84-447E-8105-85E738389F4E} = {EE00AE4B-2FF7-43C6-8ED3-6B04B9CBC34E}
 		{81404D40-E09E-46B5-97FB-6A03A68E5378} = {75FBB7B3-376E-4D76-9DC4-3EA1EA75EE17}
 		{F736F827-AC05-4BBD-8CCD-656350E04FF3} = {A0869E4D-5EA0-4190-B897-6F5870696463}
+		{BDBA08DC-2B87-4D90-BDEC-A39E4B875AC7} = {A0869E4D-5EA0-4190-B897-6F5870696463}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2058E876-48D3-4FE9-963D-F1A6822D31F1}

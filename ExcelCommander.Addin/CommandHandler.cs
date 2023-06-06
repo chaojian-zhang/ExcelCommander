@@ -11,6 +11,19 @@ namespace ExcelCommander.Addin
 {
     internal class CommandHandler
     {
+        #region Preset Replies
+        private CommandData Ok() => new CommandData()
+        {
+            CommandType = "Ok",
+            Contents = string.Empty
+        };
+        private CommandData Error(string message) => new CommandData()
+        {
+            CommandType = "Error",
+            Contents = message ?? string.Empty
+        };
+        #endregion
+
         #region Entry Point
         internal CommandData Handle(CommandData data)
         {
@@ -32,7 +45,30 @@ namespace ExcelCommander.Addin
         }
         #endregion
 
-        #region Handling Routines
+        #region Reading Routines
+        public CommandData GetCell(string cell)
+        {
+            try
+            {
+                if (TryGetRowCol(cell, out int row, out int col))
+                {
+                    return new CommandData()
+                    {
+                        CommandType = "Value",
+                        Contents = ActiveWorksheet.Cells[row, col].Value.ToString()
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+            
+            return Ok();
+        }
+        #endregion
+
+        #region Writing Routines
         public CommandData CSV(string start, string filename)
         {
             try
