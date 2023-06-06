@@ -6,6 +6,9 @@ using System.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using Microsoft.Office.Tools.Excel;
+using Microsoft.Office.Interop.Excel;
+using System.Drawing;
 
 namespace ExcelCommander.Addin
 {
@@ -152,7 +155,11 @@ namespace ExcelCommander.Addin
         }
         public CommandData HasTable(string name)
         {
-            throw new NotImplementedException();
+            return new CommandData()
+            {
+                CommandType = "Query Result",
+                Contents = HasWorkSheet(name).ToString()
+            };
         }
         public CommandData HasNamedRange(string name)
         {
@@ -179,43 +186,131 @@ namespace ExcelCommander.Addin
         }
         public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                GetWorkSheet(sheetName).Move(GetWorkSheet(otherSheetName));
+            }
+            catch (Exception){}
+            return null;
         }
         public CommandData CreateTable(string range, string tableName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ActiveWorksheet.ListObjects.AddEx(XlListObjectSourceType.xlSrcRange, Application.get_Range(range), null, XlYesNoGuess.xlYes, null, "TableStyleMedium3").Name = tableName;
+            }
+            catch (Exception) { }
+            return null;
         }
-        public CommandData SetFontWeight(string range, string weight)
+        public CommandData NameRange(string range, string rangeName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Globals.ThisAddIn.Application.get_Range(range).Name = rangeName;
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Fit(string range)
+        {
+            try
+            {
+                ActiveWorksheet.Range[range].Columns.AutoFit();
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Bold(string range, string weight)
+        {
+            try
+            {
+                Application.Range[range].Style.Font.Bold = bool.Parse(weight);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData SetFontSize(string range, string size)
+        {
+            try
+            {
+                Application.Range[range].Style.Font.Size = int.Parse(size);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData SetFontColor(string range, string color)
+        {
+            try
+            {
+                Application.Range[range].Style.Font.Color = ParseColor(color);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Background(string range, string color)
+        {
+            try
+            {
+                Application.Range[range].Style.Interior.Color = ParseColor(color);
+            }
+            catch (Exception) { }
+            return null;
         }
         public CommandData SetValueFormat(string range, string format)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Application.Range[range].NumberFormat = format; // Remark-cz: Text or NumberFormat?
+            }
+            catch (Exception) { }
+            return null;
         }
         public CommandData SetColor(string cell, string color)
         {
-            throw new NotImplementedException();
+            if (TryGetRowCol(cell, out int row, out int col))
+                ActiveWorksheet.Cells[row, col].Style.Font.Color = ParseColor(color);
+            return null;
         }
         public CommandData SetColor(string row, string col, string color)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Style.Font.Color = ParseColor(color);
+            }
+            catch (Exception) { }
+            return null;
         }
         public CommandData SetEquation(string row, string col, string equation)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Formula = equation.Trim('"'); // Remark-cz: Expect starting with '='
+            }
+            catch (Exception) { }
+            return null;
         }
         public CommandData SetCell(string cell, string value)
         {
-            throw new NotImplementedException();
+            if (TryGetRowCol(cell, out int row, out int col))
+                ActiveWorksheet.Cells[row, col].Value = ParseValue(value);
+            return null;
         }
         public CommandData SetCellName(string cell, string name)
         {
-            throw new NotImplementedException();
+            if (TryGetRowCol(cell, out int row, out int col))
+            {
+                ActiveWorksheet.Cells[row, col].Name = name;
+            }
+            return null;
         }
         public CommandData SetCellName(string row, string col, string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Name = name;
+            }
+            catch (Exception) { }
+            return null;
         }
         public CommandData SetEquation(string cell, string equation)
         {
@@ -258,6 +353,7 @@ namespace ExcelCommander.Addin
         #endregion
 
         #region Helpers
+        private Application Application => Globals.ThisAddIn.Application;
         private Excel.Worksheet ActiveWorksheet = (Excel.Worksheet)Globals.ThisAddIn.Application.ActiveSheet;
         private bool HasWorkSheet(string name)
            => GetWorkSheets().Contains(name);
@@ -332,6 +428,10 @@ namespace ExcelCommander.Addin
         private object ParseValue(string value)
         {
             return (value.StartsWith("\"") || value.Any(c => !char.IsDigit(c))) ? (object)value.Trim('"') : (object)double.Parse(value);
+        }
+        private static int ParseColor(string color)
+        {
+            return System.Drawing.ColorTranslator.ToOle((System.Drawing.Color)Enum.Parse(typeof(System.Drawing.Color), color));
         }
         #endregion
     }

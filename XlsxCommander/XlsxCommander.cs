@@ -199,11 +199,31 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
-        public CommandData SetFontWeight(string range, string weight)
+        public CommandData NameRange(string range, string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Fit(string range)
+        {
+            throw new NotFiniteNumberException();
+        }
+        public CommandData Bold(string range, string weight)
         {
             throw new NotImplementedException();
         }
         public CommandData SetValueFormat(string range, string format)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetFontSize(string range, string size)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Background(string range, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetFontColor(string range, string color)
         {
             throw new NotImplementedException();
         }

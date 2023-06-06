@@ -13,7 +13,7 @@ namespace ExcelCommander.Base
             builder.AppendLine("Available commands: ");
             foreach (var method in typeof(ICommander).GetMethods())
             {
-                builder.AppendLine($"{method.Name}(${string.Join(",", method.GetParameters().Select(p => $"{p.ParameterType.Name} {p.Name}"))})");
+                builder.AppendLine($"{method.Name}({string.Join(",", method.GetParameters().Select(p => $"{p.ParameterType.Name} {p.Name}"))})");
             }
             return builder.ToString();
         }
@@ -55,8 +55,14 @@ namespace ExcelCommander.Base
         CommandData MoveSheetBefore(string sheetName, string otherSheetName);
 
         CommandData CreateTable(string range, string tableName);
+        CommandData NameRange(string range, string name);
+        CommandData Fit(string range);
 
-        CommandData SetFontWeight(string range, string weight);
+        CommandData Bold(string range, string weight);
+        CommandData SetFontSize(string range, string size);
+        CommandData Background(string range, string color);
+        CommandData SetFontColor(string range, string color);
+
         CommandData SetValueFormat(string range, string format);
         CommandData SetColor(string cell, string color);
         CommandData SetColor(string row, string col, string color);

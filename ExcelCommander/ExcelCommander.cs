@@ -1,6 +1,7 @@
 ﻿using ExcelCommander.Base.ClientServer;
 using ExcelCommander.Base.Serialization;
 using ExcelCommander.Base;
+using System.Drawing;
 
 namespace ExcelCommander
 {
@@ -301,7 +302,25 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData SetFontWeight(string range, string weight)
+        public CommandData NameRange(string range, string rangeName)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(NameRange)} \"{range}\" \"{rangeName}\""
+            });
+            return null;
+        }
+        public CommandData Fit(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Fit)} \"{range}\""
+            });
+            return null;
+        }
+        public CommandData Bold(string range, string weight)
         {
             Client.Send(new CommandData
             {
@@ -316,6 +335,33 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(SetValueFormat)} \"{range}\" \"{format}\""
+            });
+            return null;
+        }
+        public CommandData SetFontSize(string range, string size)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontSize)} \"{range}\" {size}"
+            });
+            return null;
+        }
+        public CommandData Background(string range, string color)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontSize)} \"{range}\" \"{color}\""
+            });
+            return null;
+        }
+        public CommandData SetFontColor(string range, string color)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontColor)} \"{range}\" \"{color}\""
             });
             return null;
         }
