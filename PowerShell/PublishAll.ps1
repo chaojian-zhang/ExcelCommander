@@ -27,7 +27,6 @@ foreach ($Item in $PublishWindowsExecutables)
 }
 # Publish Loose Libraries
 $PublishLibraries = @(
-    "ExcelCommander.Addin"
     "ExcelCommander.Base"
 )
 foreach ($Item in $PublishLibraries)
@@ -37,6 +36,7 @@ foreach ($Item in $PublishLibraries)
 # Publish Nugets
 $PublishNugets = @(
     "ExcelCommander"
+	"ExcelCommander.Base"
 )
 foreach ($Item in $PublishNugets)
 {
@@ -56,5 +56,8 @@ if (-Not (Test-Path (Join-Path $PublishFolder "ExcelCommander.exe")))
     Write-Host "Build failed."
     Exit
 }
+
+# Notes
+Write-Host "Excel Addins and XlsxCommander must be published manually (or likely with .Net Framework build tools?)"
 
 Set-Location $PrevPath
