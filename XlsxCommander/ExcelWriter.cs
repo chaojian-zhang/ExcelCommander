@@ -1,6 +1,6 @@
 ﻿using ExcelCommander.Base;
 
-namespace ExcelCommander
+namespace XlsxCommander
 {
     public class ExcelWriter
     {

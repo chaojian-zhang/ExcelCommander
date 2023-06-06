@@ -1,31 +1,16 @@
-﻿using ExcelCommander.Base.ClientServer;
-
-namespace ExcelCommander
+﻿namespace XlsxCommander
 {
-    internal sealed class SocketUse : IDisposable
+    internal sealed class StandaloneUse
     {
-        #region Construction
-        private int Port { get; }
-        private Client Client { get; set; }
-        public SocketUse(int port)
+        public ExcelWriter Writer { get; }
+        public string OutputFile { get; }
+        public StandaloneUse(string outputFile)
         {
-            Port = port;
+            OutputFile = outputFile;
+            Writer = new ExcelWriter(outputFile);
 
-            Client = new Client(Port, data => null);
-            Client.Start();
-
-            Console.WriteLine($"Service started at port {Port}.");
+            Console.WriteLine($"Write to file {outputFile}.");
         }
-        #endregion
-
-        #region Disposal
-        public void Dispose()
-        {
-            Client.Close();
-        }
-        #endregion
-
-        #region Handling
         public void Execute(string[] commands, bool interpretIfNull = true)
         {
             if (commands == null && interpretIfNull)
@@ -42,17 +27,11 @@ namespace ExcelCommander
                 foreach (var command in commands)
                     ExecuteCommand(command);
             }
-            Dispose();
         }
         public void ExecuteCommand(string command)
         {
-            Client.Send(new Base.Serialization.CommandData
-            {
-                CommandType = "Development",
-                Contents = command
-            });
+            Writer.EvaluateCommand(command);
         }
-        #endregion
     }
     internal class Program
     {
@@ -62,26 +41,19 @@ namespace ExcelCommander
             {
                 Console.WriteLine("""
                     Missing inputs.
-                    ExcelCommander <Server Port Number> (<ScriptFilePath>)
+                    XlsxCommander <Output Excel Filename.xlsx> (<ScriptFilePath>)
                     """);
                 return;
             }
 
             string target = args.First();
-            string[] scriptLines = args.Length >= 2 
+            string[] scriptLines = args.Length >= 2
                 ? File.ReadAllLines(Path.GetFullPath(args[1]))
                 : null;
 
-            if (int.TryParse(target, out int port))
+            if (Path.GetExtension(target) == ".xlsx")
             {
-                try
-                {
-                    new SocketUse(port).Execute(scriptLines);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error: {e}");
-                }
+                new StandaloneUse(target).Execute(scriptLines);
             }
             else
             {
