@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace ExcelCommander.Addin
 {
-    internal class CommandHandler
+    internal class CommandHandler: ICommander
     {
         #region Preset Replies
         private CommandData Ok() => new CommandData()
@@ -66,6 +66,98 @@ namespace ExcelCommander.Addin
             
             return Ok();
         }
+        public CommandData GetCell(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellColor(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellColor(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellName(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellName(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFontWeight(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFontWeight(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValueFormat(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValueFormat(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValue(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValue(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFormula(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFormula(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValues(string cell, string rows, string cols)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValues(string startcell, string endcell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValues(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetTable(string tableName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetSheet(string sheetName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCurrentSheet()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetSheets()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData HasSheet(string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData HasTable(string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData HasNamedRange(string name)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Writing Routines
@@ -80,15 +172,50 @@ namespace ExcelCommander.Addin
                 return null;
             }
         }
-        public CommandData GoToSheet(string sheetName)
-        {
-            GetWorkSheet(sheetName).Select();
-            return null;
-        }
         public CommandData CreateSheet(string sheetName)
         {
             TryCreateWorksheet(sheetName);
             return null;
+        }
+        public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData CreateTable(string range, string tableName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetFontWeight(string range, string weight)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetValueFormat(string range, string format)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetColor(string cell, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetColor(string row, string col, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetEquation(string row, string col, string equation)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetCell(string cell, string value)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetCellName(string cell, string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetCellName(string row, string col, string name)
+        {
+            throw new NotImplementedException();
         }
         public CommandData SetEquation(string cell, string equation)
         {
@@ -118,6 +245,14 @@ namespace ExcelCommander.Addin
                         sheet.Cells[row + dRow, col + dCol].Value = ParseValue(values[dCol]);
                 }
             }
+            return null;
+        }
+        #endregion
+
+        #region State Management Routines
+        public CommandData GoToSheet(string sheetName)
+        {
+            GetWorkSheet(sheetName).Select();
             return null;
         }
         #endregion

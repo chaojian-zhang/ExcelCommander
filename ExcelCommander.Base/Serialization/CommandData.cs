@@ -8,6 +8,7 @@ namespace ExcelCommander.Base.Serialization
         #region Properties
         public string CommandType;
         public string Contents;
+        public object Payload; // Remark-cz: Arbitrary payload for runtime calls, not serialized
         #endregion
 
         #region Interface

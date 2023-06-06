@@ -1,4 +1,5 @@
-﻿using ExcelCommander.Base.ClientServer;
+﻿using ExcelCommander.Base;
+using ExcelCommander.Base.ClientServer;
 using ExcelCommander.Base.Serialization;
 
 namespace ExcelCommander
@@ -47,7 +48,9 @@ namespace ExcelCommander
         }
         public void ExecuteCommand(string command)
         {
-            if (command.StartsWith("Get"))
+            if (command == "Help")
+                Console.WriteLine(CommanderHelper.GetHelpString());
+            else if (command.StartsWith("Get"))
             {
                 CommandData reply = Client.SendAndReceive(new CommandData
                 {

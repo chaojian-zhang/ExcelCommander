@@ -1,4 +1,6 @@
-﻿namespace XlsxCommander
+﻿using ExcelCommander.Base;
+
+namespace XlsxCommander
 {
     internal sealed class StandaloneUse
     {
@@ -30,7 +32,10 @@
         }
         public void ExecuteCommand(string command)
         {
-            Writer.EvaluateCommand(command);
+            if (command == "Help")
+                Console.WriteLine(CommanderHelper.GetHelpString());
+            else 
+                Writer.EvaluateCommand(command);
         }
     }
     internal class Program

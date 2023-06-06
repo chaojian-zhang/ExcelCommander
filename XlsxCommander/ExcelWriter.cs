@@ -1,8 +1,10 @@
 ﻿using ExcelCommander.Base;
+using ExcelCommander.Base.Serialization;
+using System.Reflection;
 
 namespace XlsxCommander
 {
-    public class ExcelWriter
+    public class ExcelWriter: ICommander
     {
         #region Construction
         public ExcelWriter(string outputFile)
@@ -19,16 +21,18 @@ namespace XlsxCommander
         #region Interface
         internal void EvaluateCommand(string command)
         {
-            string[] parameters = command.SplitParameters();
-            switch (parameters.First())
-            {
-                default:
-                    break;
-            }
+            string[] parameters = command.SplitParameters(true);
+
+            var methods = GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            var match = methods.FirstOrDefault(m =>
+                m.Name == parameters[0]
+                && m.GetParameters().Length == parameters.Length - 1
+                && m.ReturnType == typeof(CommandData)); // Remark-cz: ExcelWriter implements the same CommandData return type interface but generally do not return anything as messages (but may return as payloads) and preferrably prints out the results
+            match?.Invoke(this, parameters.Skip(1).OfType<object>().ToArray());
         }
         #endregion
 
-        #region Methods
+        #region Speciaty Functions
         public void Spawn()
         {
             Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
@@ -45,6 +49,177 @@ namespace XlsxCommander
             worksheet.Cells[2, 1] = 1;
             worksheet.Cells[2, 2] = 2;
             worksheet.Cells[2, 3].Formula = "=SUM(A2,B2)";
+        }
+        #endregion
+
+        #region Reading Routines
+        public CommandData GetCell(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCell(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellColor(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellColor(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellName(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellName(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFontWeight(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFontWeight(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValueFormat(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValueFormat(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValue(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValue(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFormula(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFormula(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValues(string cell, string rows, string cols)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValues(string startcell, string endcell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellValues(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetTable(string tableName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetSheet(string sheetName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CommandData GetCurrentSheet()
+        {
+            throw new NotImplementedException();
+        }
+
+        public CommandData GetSheets()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData HasSheet(string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData HasTable(string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData HasNamedRange(string name)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Writing Routines
+        public CommandData CSV(string start, string filename)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData CreateSheet(string sheetName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData CreateTable(string range, string tableName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetFontWeight(string range, string weight)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetValueFormat(string range, string format)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetColor(string cell, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetColor(string row, string col, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetEquation(string cell, string equation)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetEquation(string row, string col, string equation)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetCell(string cell, string value)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetCell(string row, string col, string value)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetCellName(string cell, string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetCellName(string row, string col, string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetCellValues(string start, string csv)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region State Management Routines
+        public CommandData GoToSheet(string sheetName)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
