@@ -13,7 +13,7 @@ namespace ExcelCommander.Base
             builder.AppendLine("Available commands: ");
             foreach (var method in typeof(ICommander).GetMethods())
             {
-                builder.AppendLine($"{method.Name}({string.Join(",", method.GetParameters().Select(p => $"{p.ParameterType.Name} {p.Name}"))})");
+                builder.AppendLine($"{method.Name}({string.Join(", ", method.GetParameters().Select(p => $"{p.ParameterType.Name} {p.Name}"))})");
             }
             return builder.ToString();
         }
