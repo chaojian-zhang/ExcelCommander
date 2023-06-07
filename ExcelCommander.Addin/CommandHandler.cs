@@ -223,6 +223,15 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
+        public CommandData Cell(string range, string value)
+        {
+            try
+            {
+                Application.Range[range].Value = ParseValue(value);
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData Clear(string range)
         {
             try
@@ -298,15 +307,6 @@ namespace ExcelCommander.Addin
             try
             {
                 Globals.ThisAddIn.Application.get_Range(range).Name = ParseString(rangeName);
-            }
-            catch (Exception) { }
-            return null;
-        }
-        public CommandData Set(string range, string value)
-        {
-            try
-            {
-                Application.Range[range].Value = ParseValue(value);
             }
             catch (Exception) { }
             return null;

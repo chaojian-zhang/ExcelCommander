@@ -19,7 +19,7 @@ namespace ExcelCommander
             Client = new Client(Port, data => null);
             Client.Start();
 
-            Console.WriteLine($"Service started at port {Port}.");
+            Console.WriteLine($"Commander connected to port {Port}.");
         }
         #endregion
 
@@ -377,12 +377,30 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData Fit(string range)
+        public CommandData Cell(string range, double value)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Fit)} {range}"
+                Contents = $"{nameof(Cell)} {range} {value}"
+            });
+            return null;
+        }
+        public CommandData Cell(string range, int value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Cell)} {range} {value}"
+            });
+            return null;
+        }
+        public CommandData Cell(string range, string value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Cell)} {range} \"{value}\""
             });
             return null;
         }
@@ -428,6 +446,15 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(CreateTable)} {range} \"{tableName}\""
+            });
+            return null;
+        }
+        public CommandData Fit(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Fit)} {range}"
             });
             return null;
         }
@@ -545,33 +572,6 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(SetEquation)} {row} {col} \"{equation}\""
-            });
-            return null;
-        }
-        public CommandData Set(string range, double value)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(Set)} {range} {value}"
-            });
-            return null;
-        }
-        public CommandData Set(string range, int value)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(Set)} {range} {value}"
-            });
-            return null;
-        }
-        public CommandData Set(string range, string value)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(Set)} {range} \"{value}\""
             });
             return null;
         }

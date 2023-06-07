@@ -53,6 +53,7 @@ namespace ExcelCommander.Base
         CommandData Background(string range, string color);
         CommandData Bold(string range, string weight);
         CommandData Border(string range, string weight);
+        CommandData Cell(string range, string value);
         CommandData Clear(string range);
         CommandData ClearFormat(string range);
         CommandData Color(string range, string color);
@@ -64,7 +65,6 @@ namespace ExcelCommander.Base
         CommandData Merge(string range);
         CommandData MoveSheetBefore(string sheetName, string otherSheetName);
         CommandData NameRange(string range, string name);
-        CommandData Set(string range, string value);
         CommandData SetCell(string cell, string value);
         CommandData SetCell(string row, string col, string value);
         CommandData SetCellName(string cell, string name);

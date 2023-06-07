@@ -203,6 +203,10 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
+        public CommandData Cell(string range, string value)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData Clear(string range)
         {
             throw new NotImplementedException();
@@ -244,10 +248,6 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData SetFontSize(string range, string size)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData Set(string range, string value)
         {
             throw new NotImplementedException();
         }
