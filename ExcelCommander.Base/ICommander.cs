@@ -21,6 +21,7 @@ namespace ExcelCommander.Base
     public interface ICommander
     {
         #region Reading Routines
+        CommandData Get(string range);
         CommandData GetCell(string cell);
         CommandData GetCell(string row, string col);
         CommandData GetCellColor(string cell);
@@ -48,23 +49,27 @@ namespace ExcelCommander.Base
         #endregion
 
         #region Writing Routines
+        CommandData Align(string range, string option);
         CommandData Background(string range, string color);
         CommandData Bold(string range, string weight);
+        CommandData Border(string range, string weight);
         CommandData Clear(string range);
         CommandData ClearFormat(string range);
+        CommandData Color(string range, string color);
+        CommandData Color(string row, string col, string color);
         CommandData CreateSheet(string sheetName);
         CommandData CreateTable(string range, string tableName);
         CommandData CSV(string start, string filename);
         CommandData Fit(string range);
+        CommandData Merge(string range);
         CommandData MoveSheetBefore(string sheetName, string otherSheetName);
         CommandData NameRange(string range, string name);
+        CommandData Set(string range, string value);
         CommandData SetCell(string cell, string value);
         CommandData SetCell(string row, string col, string value);
         CommandData SetCellName(string cell, string name);
         CommandData SetCellName(string row, string col, string name);
         CommandData SetCellValues(string start, string csv);
-        CommandData SetColor(string cell, string color);
-        CommandData SetColor(string row, string col, string color);
         CommandData SetEquation(string cell, string equation);
         CommandData SetEquation(string row, string col, string equation);
         CommandData SetFontColor(string range, string color);

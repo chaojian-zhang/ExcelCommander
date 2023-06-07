@@ -82,6 +82,10 @@ namespace XlsxCommander
         #endregion
 
         #region Reading Routines
+        public CommandData Get(string range)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData GetCell(string cell)
         {
             throw new NotImplementedException();
@@ -183,11 +187,19 @@ namespace XlsxCommander
         #endregion
 
         #region Writing Routines
+        public CommandData Align(string range, string option)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData Background(string range, string color)
         {
             throw new NotImplementedException();
         }
         public CommandData Bold(string range, string weight)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Border(string range, string weight)
         {
             throw new NotImplementedException();
         }
@@ -215,6 +227,10 @@ namespace XlsxCommander
         {
             throw new NotFiniteNumberException();
         }
+        public CommandData Merge(string range)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
         {
             throw new NotImplementedException();
@@ -228,6 +244,10 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData SetFontSize(string range, string size)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Set(string range, string value)
         {
             throw new NotImplementedException();
         }
@@ -251,11 +271,11 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
-        public CommandData SetColor(string cell, string color)
+        public CommandData Color(string range, string color)
         {
             throw new NotImplementedException();
         }
-        public CommandData SetColor(string row, string col, string color)
+        public CommandData Color(string row, string col, string color)
         {
             throw new NotImplementedException();
         }

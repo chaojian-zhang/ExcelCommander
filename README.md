@@ -95,3 +95,24 @@ connection.SetCell("A2", "15")
 * GoToSheet sheetName
 
 In C#/Python use, call explicit functions through `ExcelCommander` or `XlsxCommander`, or use `ExecuteCommand()` method.
+
+## Reference
+
+### Alignment Options
+
+* Center
+* CenterAcrossSelection
+* Distributed
+* General: Align according to data type.
+* Justify
+* Left
+* Right
+
+### Border Options
+
+Weights:
+
+* Hairline: thinnest border
+* Medium
+* Thick
+* Thin

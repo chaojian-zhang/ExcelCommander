@@ -7,6 +7,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using Microsoft.Office.Interop.Excel;
+using System.Text;
 
 namespace ExcelCommander.Addin
 {
@@ -47,6 +48,25 @@ namespace ExcelCommander.Addin
         #endregion
 
         #region Reading Routines
+        public CommandData Get(string range)
+        {
+            try
+            {
+                string csv = ToCSV(Application.Range[range].Value2);
+
+                return new CommandData()
+                {
+                    CommandType = "Value",
+                    Contents = csv
+                };
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
+
+            return Ok();
+        }
         public CommandData GetCell(string cell)
         {
             try
@@ -166,6 +186,15 @@ namespace ExcelCommander.Addin
         #endregion
 
         #region Writing Routines
+        public CommandData Align(string range, string option)
+        {
+            try
+            {
+                Application.Range[range].Style.HorizontalAlignment = (XlHAlign)Enum.Parse(typeof(XlHAlign), $"xlHAlign{option}"); // Remark-cz: E.g. XlHAlign.xlHAlignLeft
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData Background(string range, string color)
         {
             try
@@ -180,6 +209,15 @@ namespace ExcelCommander.Addin
             try
             {
                 Application.Range[range].Style.Font.Bold = bool.Parse(weight);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Border(string range, string weight)
+        {
+            try
+            {
+                Application.Range[range].BorderAround2(null, (XlBorderWeight)Enum.Parse(typeof(XlBorderWeight), $"xl{weight}"), XlColorIndex.xlColorIndexAutomatic);
             }
             catch (Exception) { }
             return null;
@@ -236,6 +274,15 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
+        public CommandData Merge(string range)
+        {
+            try
+            {
+                Application.Range[range].Merge();
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
         {
             try
@@ -250,6 +297,15 @@ namespace ExcelCommander.Addin
             try
             {
                 Globals.ThisAddIn.Application.get_Range(range).Name = rangeName;
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Set(string range, string value)
+        {
+            try
+            {
+                Application.Range[range].Value = ParseValue(value);
             }
             catch (Exception) { }
             return null;
@@ -316,13 +372,16 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
-        public CommandData SetColor(string cell, string color)
+        public CommandData Color(string range, string color)
         {
-            if (TryGetRowCol(cell, out int row, out int col))
-                ActiveWorksheet.Cells[row, col].Style.Font.Color = ParseColor(color);
+            try
+            {
+                Application.Range[range].Style.Font.Color = ParseColor(color);
+            }
+            catch (Exception){}
             return null;
         }
-        public CommandData SetColor(string row, string col, string color)
+        public CommandData Color(string row, string col, string color)
         {
             try
             {
@@ -412,9 +471,28 @@ namespace ExcelCommander.Addin
             }
             else return GetWorkSheet(name);
         }
+        private string GetWorksheetAsCSV(string sheetName)
+        {
+            return ToCSV(GetWorkSheet(sheetName).UsedRange.Value2);
+        }
         #endregion
 
         #region Value Helpers
+        public string ToCSV(object[,] data, string delimiter = ",")
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int row = 0; row < data.GetLength(0); row++)
+            {
+                for (int col = 0; col < data.GetLength(1); col++)
+                {
+                    builder.Append(data[row + 1, col + 1]); // For some reason this data from Excel is indexed from 1
+                    if (col != data.GetLength(1) - 1)
+                        builder.Append(delimiter);
+                }
+                builder.AppendLine();
+            }
+            return builder.ToString();
+        }
         private bool TryGetRowCol(string cellRef, out int row, out int col)
         {
             var regex = Regex.Match(cellRef, @"([a-zA-Z]+)(\d+)");

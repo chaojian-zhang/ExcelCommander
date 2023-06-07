@@ -1,6 +1,7 @@
 ﻿using ExcelCommander.Base.ClientServer;
 using ExcelCommander.Base.Serialization;
 using ExcelCommander.Base;
+using System.Drawing;
 
 namespace ExcelCommander
 {
@@ -73,6 +74,14 @@ namespace ExcelCommander
         #endregion
 
         #region Interface Calls - Reading
+        public CommandData Get(string range)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Get)} \"{range}\""
+            });
+        }
         public CommandData GetCell(string cell)
         {
             return Client.SendAndReceive(new CommandData
@@ -268,6 +277,51 @@ namespace ExcelCommander
         #endregion
 
         #region Interface Calls - Writing
+        public CommandData Align(string range, string option)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Align)} \"{range}\" \"{option}\""
+            });
+            return null;
+        }
+        public CommandData Border(string range, string weight)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontSize)} \"{range}\" \"{weight}\""
+            });
+            return null;
+        }
+        public CommandData Background(string range, string color)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontSize)} \"{range}\" \"{color}\""
+            });
+            return null;
+        }
+        public CommandData Bold(string range, string weight)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetValueFormat)} \"{range}\" \"{weight}\""
+            });
+            return null;
+        }
+        public CommandData Fit(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Fit)} \"{range}\""
+            });
+            return null;
+        }
         public CommandData Clear(string range)
         {
             Client.Send(new CommandData
@@ -304,15 +358,6 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(MoveSheetBefore)} \"{sheetName}\" \"{otherSheetName}\""
-            });
-            return null;
-        }
         public CommandData CreateTable(string range, string tableName)
         {
             Client.Send(new CommandData
@@ -322,30 +367,30 @@ namespace ExcelCommander
             });
             return null;
         }
+        public CommandData Merge(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Merge)} \"{range}\""
+            });
+            return null;
+        }
+        public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(MoveSheetBefore)} \"{sheetName}\" \"{otherSheetName}\""
+            });
+            return null;
+        }
         public CommandData NameRange(string range, string rangeName)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
                 Contents = $"{nameof(NameRange)} \"{range}\" \"{rangeName}\""
-            });
-            return null;
-        }
-        public CommandData Fit(string range)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(Fit)} \"{range}\""
-            });
-            return null;
-        }
-        public CommandData Bold(string range, string weight)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(SetValueFormat)} \"{range}\" \"{weight}\""
             });
             return null;
         }
@@ -367,15 +412,6 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData Background(string range, string color)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(SetFontSize)} \"{range}\" \"{color}\""
-            });
-            return null;
-        }
         public CommandData SetFontColor(string range, string color)
         {
             Client.Send(new CommandData
@@ -385,21 +421,21 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData SetColor(string cell, string color)
+        public CommandData Color(string range, string color)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetColor)} \"{cell}\" \"{color}\""
+                Contents = $"{nameof(Color)} \"{range}\" \"{color}\""
             });
             return null;
         }
-        public CommandData SetColor(string row, string col, string color)
+        public CommandData Color(string row, string col, string color)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetColor)} {row} {col} \"{color}\""
+                Contents = $"{nameof(Color)} {row} {col} \"{color}\""
             });
             return null;
         }
@@ -418,6 +454,15 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(SetEquation)} {row} {col} \"{equation}\""
+            });
+            return null;
+        }
+        public CommandData Set(string range, string value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Set)} \"{range}\" \"{value}\""
             });
             return null;
         }
