@@ -44,7 +44,7 @@ namespace ExcelCommander.Addin
                     && m.GetParameters().Length == parameters.Length - 1
                     && m.ReturnType == typeof(CommandData));
                 if (match != null)
-                    return (CommandData)match.Invoke(this, parameters.Skip(1).OfType<object>().ToArray());
+                    return (CommandData)match.Invoke(this, parameters.Skip(1).OfType<string>().ToArray());  // Remar-cz: Notice we are not trimming `"` right here and instead require all specific handling routines to do it explicitly because sometimes we might want the additional semantics to denote something like "15" as a text instead of pure value
                 else return null;
             }
         }
@@ -245,7 +245,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                return SetCellValues(start, System.IO.File.ReadAllText(filename));
+                return SetCellValues(start, System.IO.File.ReadAllText(ParseString(filename)));
             }
             catch (Exception)
             {
@@ -256,14 +256,14 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                ActiveWorksheet.ListObjects.AddEx(XlListObjectSourceType.xlSrcRange, Application.get_Range(range), null, XlYesNoGuess.xlYes, null, "TableStyleMedium3").Name = tableName;
+                ActiveWorksheet.ListObjects.AddEx(XlListObjectSourceType.xlSrcRange, Application.get_Range(range), null, XlYesNoGuess.xlYes, null, "TableStyleMedium3").Name = ParseString(tableName);
             }
             catch (Exception) { }
             return null;
         }
         public CommandData CreateSheet(string sheetName)
         {
-            TryCreateWorksheet(sheetName);
+            TryCreateWorksheet(ParseString(sheetName));
             return null;
         }
         public CommandData Fit(string range)
@@ -288,7 +288,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                GetWorkSheet(sheetName).Move(GetWorkSheet(otherSheetName));
+                GetWorkSheet(ParseString(sheetName)).Move(GetWorkSheet(ParseString(otherSheetName)));
             }
             catch (Exception){}
             return null;
@@ -297,7 +297,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                Globals.ThisAddIn.Application.get_Range(range).Name = rangeName;
+                Globals.ThisAddIn.Application.get_Range(range).Name = ParseString(rangeName);
             }
             catch (Exception) { }
             return null;
@@ -321,7 +321,7 @@ namespace ExcelCommander.Addin
         {
             if (TryGetRowCol(cell, out int row, out int col))
             {
-                ActiveWorksheet.Cells[row, col].Name = name;
+                ActiveWorksheet.Cells[row, col].Name = ParseString(name);
             }
             return null;
         }
@@ -329,7 +329,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Name = name;
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Name = ParseString(name);
             }
             catch (Exception) { }
             return null;
@@ -361,7 +361,7 @@ namespace ExcelCommander.Addin
         public CommandData SetEquation(string cell, string equation)
         {
             if (TryGetRowCol(cell, out int row, out int col))
-                ActiveWorksheet.Cells[row, col].Formula = equation.Trim('"'); // Remark-cz: Expect starting with '='
+                ActiveWorksheet.Cells[row, col].Formula = ParseString(equation); // Remark-cz: Expect starting with '='
             return null;
         }
         public CommandData SetEquation(string row, string col, string equation)
@@ -423,7 +423,7 @@ namespace ExcelCommander.Addin
         #region State Management Routines
         public CommandData GoToSheet(string sheetName)
         {
-            GetWorkSheet(sheetName).Select();
+            GetWorkSheet(ParseString(sheetName)).Select();
             return null;
         }
         #endregion
@@ -520,6 +520,8 @@ namespace ExcelCommander.Addin
                 return value;
             }
         }
+        private string ParseString(string quotedString)
+            => quotedString.Trim('"');
         private object ParseValue(string value)
         {
             return (value.StartsWith("\"") || value.Any(c => !char.IsDigit(c))) ? (object)value.Trim('"') : (object)double.Parse(value);

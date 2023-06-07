@@ -79,7 +79,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Get)} \"{range}\""
+                Contents = $"{nameof(Get)} {range}"
             });
         }
         public CommandData GetCell(string cell)
@@ -87,7 +87,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCell)} \"{cell}\""
+                Contents = $"{nameof(GetCell)} {cell}"
             });
         }
         public CommandData GetCell(int row, int col)
@@ -111,7 +111,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellColor)} \"{cell}\""
+                Contents = $"{nameof(GetCellColor)} {cell}"
             });
         }
         public CommandData GetCellColor(int row, int col)
@@ -135,7 +135,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellName)} \"{cell}\""
+                Contents = $"{nameof(GetCellName)} {cell}"
             });
         }
         public CommandData GetCellName(int row, int col)
@@ -159,7 +159,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellFontWeight)} \"{cell}\""
+                Contents = $"{nameof(GetCellFontWeight)} {cell}"
             });
         }
         public CommandData GetCellFontWeight(int row, int col)
@@ -183,7 +183,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellValueFormat)} \"{cell}\""
+                Contents = $"{nameof(GetCellValueFormat)} {cell}"
             });
         }
         public CommandData GetCellValueFormat(int row, int col)
@@ -207,7 +207,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellValue)} \"{cell}\""
+                Contents = $"{nameof(GetCellValue)} {cell}"
             });
         }
         public CommandData GetCellValue(int row, int col)
@@ -231,7 +231,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellFormula)} \"{cell}\""
+                Contents = $"{nameof(GetCellFormula)} {cell}"
             });
         }
         public CommandData GetCellFormula(int row, int col)
@@ -255,7 +255,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellValues)} \"{cell}\" \"{rows}\" \"{cols}\""
+                Contents = $"{nameof(GetCellValues)} {cell} {rows} {cols}"
             });
         }
         public CommandData GetCellValues(string cell, string rows, string cols)
@@ -263,7 +263,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellValues)} \"{cell}\" \"{rows}\" \"{cols}\""
+                Contents = $"{nameof(GetCellValues)} {cell} {rows} {cols}"
             });
         }
         public CommandData GetCellValues(string startcell, string endcell)
@@ -271,7 +271,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellValues)} \"{startcell}\" \"{endcell}\""
+                Contents = $"{nameof(GetCellValues)} {startcell} {endcell}"
             });
         }
         public CommandData GetCellValues(string range)
@@ -279,7 +279,7 @@ namespace ExcelCommander
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(GetCellValues)} \"{range}\""
+                Contents = $"{nameof(GetCellValues)} {range}"
             });
         }
         public CommandData GetTable(string tableName)
@@ -346,7 +346,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Align)} \"{range}\" \"{option}\""
+                Contents = $"{nameof(Align)} {range} {option}"
             });
             return null;
         }
@@ -355,7 +355,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetFontSize)} \"{range}\" \"{weight}\""
+                Contents = $"{nameof(SetFontSize)} {range} {weight}"
             });
             return null;
         }
@@ -364,7 +364,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetFontSize)} \"{range}\" \"{color}\""
+                Contents = $"{nameof(SetFontSize)} {range} {color}"
             });
             return null;
         }
@@ -373,7 +373,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetValueFormat)} \"{range}\" \"{weight}\""
+                Contents = $"{nameof(SetValueFormat)} {range} {weight}"
             });
             return null;
         }
@@ -382,7 +382,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Fit)} \"{range}\""
+                Contents = $"{nameof(Fit)} {range}"
             });
             return null;
         }
@@ -391,7 +391,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Clear)} \"{range}\""
+                Contents = $"{nameof(Clear)} {range}"
             });
             return null;
         }
@@ -400,7 +400,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(ClearFormat)} \"{range}\""
+                Contents = $"{nameof(ClearFormat)} {range}"
             });
             return null;
         }
@@ -409,7 +409,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(CSV)} \"{start}\" \"{filename}\""
+                Contents = $"{nameof(CSV)} {start} \"{filename}\""
             });
             return null;
         }
@@ -427,7 +427,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(CreateTable)} \"{range}\" \"{tableName}\""
+                Contents = $"{nameof(CreateTable)} {range} \"{tableName}\""
             });
             return null;
         }
@@ -436,7 +436,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Merge)} \"{range}\""
+                Contents = $"{nameof(Merge)} {range}"
             });
             return null;
         }
@@ -454,7 +454,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(NameRange)} \"{range}\" \"{rangeName}\""
+                Contents = $"{nameof(NameRange)} {range} \"{rangeName}\""
             });
             return null;
         }
@@ -463,7 +463,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetValueFormat)} \"{range}\" \"{format}\""
+                Contents = $"{nameof(SetValueFormat)} {range} \"{format}\""
             });
             return null;
         }
@@ -472,7 +472,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetFontSize)} \"{range}\" {size}"
+                Contents = $"{nameof(SetFontSize)} {range} {size}"
             });
             return null;
         }
@@ -481,7 +481,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetFontSize)} \"{range}\" {size}"
+                Contents = $"{nameof(SetFontSize)} {range} {size}"
             });
             return null;
         }
@@ -490,7 +490,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetFontColor)} \"{range}\" \"{color}\""
+                Contents = $"{nameof(SetFontColor)} {range} {color}"
             });
             return null;
         }
@@ -499,7 +499,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Color)} \"{range}\" \"{color}\""
+                Contents = $"{nameof(Color)} {range} {color}"
             });
             return null;
         }
@@ -508,7 +508,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Color)} {row} {col} \"{color}\""
+                Contents = $"{nameof(Color)} {row} {col} {color}"
             });
             return null;
         }
@@ -517,7 +517,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Color)} {row} {col} \"{color}\""
+                Contents = $"{nameof(Color)} {row} {col} {color}"
             });
             return null;
         }
@@ -526,7 +526,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetEquation)} \"{cell}\" \"{equation}\""
+                Contents = $"{nameof(SetEquation)} {cell} \"{equation}\""
             });
             return null;
         }
@@ -553,7 +553,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Set)} \"{range}\" {value}"
+                Contents = $"{nameof(Set)} {range} {value}"
             });
             return null;
         }
@@ -562,7 +562,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Set)} \"{range}\" {value}"
+                Contents = $"{nameof(Set)} {range} {value}"
             });
             return null;
         }
@@ -571,7 +571,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Set)} \"{range}\" \"{value}\""
+                Contents = $"{nameof(Set)} {range} \"{value}\""
             });
             return null;
         }
@@ -580,7 +580,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetCell)} \"{cell}\" {value}"
+                Contents = $"{nameof(SetCell)} {cell} {value}"
             });
             return null;
         }
@@ -589,7 +589,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetCell)} \"{cell}\" {value}"
+                Contents = $"{nameof(SetCell)} {cell} {value}"
             });
             return null;
         }
@@ -598,7 +598,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetCell)} \"{cell}\" \"{value}\""
+                Contents = $"{nameof(SetCell)} {cell} \"{value}\""
             });
             return null;
         }
@@ -643,7 +643,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetCellName)} \"{cell}\" \"{name}\""
+                Contents = $"{nameof(SetCellName)} {cell} \"{name}\""
             });
             return null;
         }
@@ -660,7 +660,7 @@ namespace ExcelCommander
         {
             Client.Send(new CommandData
             {
-                CommandType = $"SetCellValues \"{start}\"",
+                CommandType = $"SetCellValues {start}",
                 Contents = csv
             });
             return null;
