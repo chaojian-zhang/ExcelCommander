@@ -1,4 +1,6 @@
-﻿namespace ExcelCommander
+﻿using System.Net.Sockets;
+
+namespace ExcelCommander
 {
     internal class Program
     {
@@ -23,6 +25,10 @@
                 try
                 {
                     new ExcelCommander(port).Execute(scriptLines);
+                }
+                catch (SocketException)
+                {
+                    Console.WriteLine("Cannot connect to service. Check and make sure service is online and port number is correct.");
                 }
                 catch (Exception e)
                 {
