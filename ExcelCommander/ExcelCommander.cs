@@ -1,7 +1,6 @@
 ﻿using ExcelCommander.Base.ClientServer;
 using ExcelCommander.Base.Serialization;
 using ExcelCommander.Base;
-using System.Drawing;
 
 namespace ExcelCommander
 {
@@ -73,7 +72,7 @@ namespace ExcelCommander
         }
         #endregion
 
-        #region Interface Calls
+        #region Interface Calls - Reading
         public CommandData GetCell(string cell)
         {
             return Client.SendAndReceive(new CommandData
@@ -266,6 +265,27 @@ namespace ExcelCommander
                 Contents = $"{nameof(HasNamedRange)} \"{name}\""
             });
         }
+        #endregion
+
+        #region Interface Calls - Writing
+        public CommandData Clear(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Clear)} \"{range}\""
+            });
+            return null;
+        }
+        public CommandData ClearFormat(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(ClearFormat)} \"{range}\""
+            });
+            return null;
+        }
         public CommandData CSV(string start, string filename)
         {
             Client.Send(new CommandData
@@ -446,6 +466,9 @@ namespace ExcelCommander
             });
             return null;
         }
+        #endregion
+
+        #region Interface Calls - Management
         public CommandData GoToSheet(string sheetName)
         {
             Client.Send(new CommandData

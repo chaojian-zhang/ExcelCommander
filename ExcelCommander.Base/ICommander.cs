@@ -25,54 +25,51 @@ namespace ExcelCommander.Base
         CommandData GetCell(string row, string col);
         CommandData GetCellColor(string cell);
         CommandData GetCellColor(string row, string col);
-        CommandData GetCellName(string cell);
-        CommandData GetCellName(string row, string col);
         CommandData GetCellFontWeight(string cell);
         CommandData GetCellFontWeight(string row, string col);
-        CommandData GetCellValueFormat(string cell);
-        CommandData GetCellValueFormat(string row, string col);
-        CommandData GetCellValue(string cell);
-        CommandData GetCellValue(string row, string col);
         CommandData GetCellFormula(string cell);
         CommandData GetCellFormula(string row, string col);
+        CommandData GetCellName(string cell);
+        CommandData GetCellName(string row, string col);
+        CommandData GetCellValue(string cell);
+        CommandData GetCellValue(string row, string col);
+        CommandData GetCellValueFormat(string cell);
+        CommandData GetCellValueFormat(string row, string col);
         CommandData GetCellValues(string cell, string rows, string cols);
-        CommandData GetCellValues(string startcell, string endcell);
         CommandData GetCellValues(string range);
-        CommandData GetTable(string tableName);
-        CommandData GetSheet(string sheetName);
+        CommandData GetCellValues(string startcell, string endcell);
         CommandData GetCurrentSheet();
+        CommandData GetSheet(string sheetName);
         CommandData GetSheets();
-
+        CommandData GetTable(string tableName);
+        CommandData HasNamedRange(string name);
         CommandData HasSheet(string name);
         CommandData HasTable(string name);
-        CommandData HasNamedRange(string name);
         #endregion
 
         #region Writing Routines
-        CommandData CSV(string start, string filename);
-
-        CommandData CreateSheet(string sheetName);
-        CommandData MoveSheetBefore(string sheetName, string otherSheetName);
-
-        CommandData CreateTable(string range, string tableName);
-        CommandData NameRange(string range, string name);
-        CommandData Fit(string range);
-
-        CommandData Bold(string range, string weight);
-        CommandData SetFontSize(string range, string size);
         CommandData Background(string range, string color);
-        CommandData SetFontColor(string range, string color);
-
-        CommandData SetValueFormat(string range, string format);
-        CommandData SetColor(string cell, string color);
-        CommandData SetColor(string row, string col, string color);
-        CommandData SetEquation(string cell, string equation);
-        CommandData SetEquation(string row, string col, string equation);
+        CommandData Bold(string range, string weight);
+        CommandData Clear(string range);
+        CommandData ClearFormat(string range);
+        CommandData CreateSheet(string sheetName);
+        CommandData CreateTable(string range, string tableName);
+        CommandData CSV(string start, string filename);
+        CommandData Fit(string range);
+        CommandData MoveSheetBefore(string sheetName, string otherSheetName);
+        CommandData NameRange(string range, string name);
         CommandData SetCell(string cell, string value);
         CommandData SetCell(string row, string col, string value);
         CommandData SetCellName(string cell, string name);
         CommandData SetCellName(string row, string col, string name);
         CommandData SetCellValues(string start, string csv);
+        CommandData SetColor(string cell, string color);
+        CommandData SetColor(string row, string col, string color);
+        CommandData SetEquation(string cell, string equation);
+        CommandData SetEquation(string row, string col, string equation);
+        CommandData SetFontColor(string range, string color);
+        CommandData SetFontSize(string range, string size);
+        CommandData SetValueFormat(string range, string format);
         #endregion
 
         #region State Management Routines

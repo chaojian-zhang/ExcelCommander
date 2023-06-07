@@ -183,7 +183,19 @@ namespace XlsxCommander
         #endregion
 
         #region Writing Routines
-        public CommandData CSV(string start, string filename)
+        public CommandData Background(string range, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Bold(string range, string weight)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Clear(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData ClearFormat(string range)
         {
             throw new NotImplementedException();
         }
@@ -191,15 +203,11 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
-        public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
-        {
-            throw new NotImplementedException();
-        }
         public CommandData CreateTable(string range, string tableName)
         {
             throw new NotImplementedException();
         }
-        public CommandData NameRange(string range, string name)
+        public CommandData CSV(string start, string filename)
         {
             throw new NotImplementedException();
         }
@@ -207,7 +215,11 @@ namespace XlsxCommander
         {
             throw new NotFiniteNumberException();
         }
-        public CommandData Bold(string range, string weight)
+        public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData NameRange(string range, string name)
         {
             throw new NotImplementedException();
         }
@@ -216,30 +228,6 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData SetFontSize(string range, string size)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData Background(string range, string color)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData SetFontColor(string range, string color)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData SetColor(string cell, string color)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData SetColor(string row, string col, string color)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData SetEquation(string cell, string equation)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData SetEquation(string row, string col, string equation)
         {
             throw new NotImplementedException();
         }
@@ -260,6 +248,26 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData SetCellValues(string start, string csv)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetColor(string cell, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetColor(string row, string col, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetEquation(string cell, string equation)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetEquation(string row, string col, string equation)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData SetFontColor(string range, string color)
         {
             throw new NotImplementedException();
         }

@@ -79,19 +79,27 @@ namespace ExcelCommander.Addin
         {
             throw new NotImplementedException();
         }
-        public CommandData GetCellName(string cell)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData GetCellName(string row, string col)
-        {
-            throw new NotImplementedException();
-        }
         public CommandData GetCellFontWeight(string cell)
         {
             throw new NotImplementedException();
         }
         public CommandData GetCellFontWeight(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFormula(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellFormula(string row, string col)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellName(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetCellName(string row, string col)
         {
             throw new NotImplementedException();
         }
@@ -111,14 +119,6 @@ namespace ExcelCommander.Addin
         {
             throw new NotImplementedException();
         }
-        public CommandData GetCellFormula(string cell)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData GetCellFormula(string row, string col)
-        {
-            throw new NotImplementedException();
-        }
         public CommandData GetCellValues(string cell, string rows, string cols)
         {
             throw new NotImplementedException();
@@ -131,6 +131,10 @@ namespace ExcelCommander.Addin
         {
             throw new NotImplementedException();
         }
+        public CommandData GetCurrentSheet()
+        {
+            throw new NotImplementedException();
+        }
         public CommandData GetTable(string tableName)
         {
             throw new NotImplementedException();
@@ -139,11 +143,11 @@ namespace ExcelCommander.Addin
         {
             throw new NotImplementedException();
         }
-        public CommandData GetCurrentSheet()
+        public CommandData GetSheets()
         {
             throw new NotImplementedException();
         }
-        public CommandData GetSheets()
+        public CommandData HasNamedRange(string name)
         {
             throw new NotImplementedException();
         }
@@ -159,61 +163,14 @@ namespace ExcelCommander.Addin
                 Contents = HasWorkSheet(name).ToString()
             };
         }
-        public CommandData HasNamedRange(string name)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region Writing Routines
-        public CommandData CSV(string start, string filename)
+        public CommandData Background(string range, string color)
         {
             try
             {
-                return SetCellValues(start, System.IO.File.ReadAllText(filename));
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-        public CommandData CreateSheet(string sheetName)
-        {
-            TryCreateWorksheet(sheetName);
-            return null;
-        }
-        public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
-        {
-            try
-            {
-                GetWorkSheet(sheetName).Move(GetWorkSheet(otherSheetName));
-            }
-            catch (Exception){}
-            return null;
-        }
-        public CommandData CreateTable(string range, string tableName)
-        {
-            try
-            {
-                ActiveWorksheet.ListObjects.AddEx(XlListObjectSourceType.xlSrcRange, Application.get_Range(range), null, XlYesNoGuess.xlYes, null, "TableStyleMedium3").Name = tableName;
-            }
-            catch (Exception) { }
-            return null;
-        }
-        public CommandData NameRange(string range, string rangeName)
-        {
-            try
-            {
-                Globals.ThisAddIn.Application.get_Range(range).Name = rangeName;
-            }
-            catch (Exception) { }
-            return null;
-        }
-        public CommandData Fit(string range)
-        {
-            try
-            {
-                ActiveWorksheet.Range[range].Columns.AutoFit();
+                Application.Range[range].Style.Interior.Color = ParseColor(color);
             }
             catch (Exception) { }
             return null;
@@ -227,62 +184,72 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
-        public CommandData SetFontSize(string range, string size)
+        public CommandData Clear(string range)
         {
             try
             {
-                Application.Range[range].Style.Font.Size = int.Parse(size);
+                Application.Range[range].Clear();
             }
             catch (Exception) { }
             return null;
         }
-        public CommandData SetFontColor(string range, string color)
+        public CommandData ClearFormat(string range)
         {
             try
             {
-                Application.Range[range].Style.Font.Color = ParseColor(color);
+                Application.Range[range].ClearFormats();
             }
             catch (Exception) { }
             return null;
         }
-        public CommandData Background(string range, string color)
+        public CommandData CSV(string start, string filename)
         {
             try
             {
-                Application.Range[range].Style.Interior.Color = ParseColor(color);
+                return SetCellValues(start, System.IO.File.ReadAllText(filename));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public CommandData CreateTable(string range, string tableName)
+        {
+            try
+            {
+                ActiveWorksheet.ListObjects.AddEx(XlListObjectSourceType.xlSrcRange, Application.get_Range(range), null, XlYesNoGuess.xlYes, null, "TableStyleMedium3").Name = tableName;
             }
             catch (Exception) { }
             return null;
         }
-        public CommandData SetValueFormat(string range, string format)
+        public CommandData CreateSheet(string sheetName)
+        {
+            TryCreateWorksheet(sheetName);
+            return null;
+        }
+        public CommandData Fit(string range)
         {
             try
             {
-                Application.Range[range].NumberFormat = format; // Remark-cz: Text or NumberFormat?
+                ActiveWorksheet.Range[range].Columns.AutoFit();
             }
             catch (Exception) { }
             return null;
         }
-        public CommandData SetColor(string cell, string color)
-        {
-            if (TryGetRowCol(cell, out int row, out int col))
-                ActiveWorksheet.Cells[row, col].Style.Font.Color = ParseColor(color);
-            return null;
-        }
-        public CommandData SetColor(string row, string col, string color)
+        public CommandData MoveSheetBefore(string sheetName, string otherSheetName)
         {
             try
             {
-                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Style.Font.Color = ParseColor(color);
+                GetWorkSheet(sheetName).Move(GetWorkSheet(otherSheetName));
             }
-            catch (Exception) { }
+            catch (Exception){}
             return null;
         }
-        public CommandData SetEquation(string row, string col, string equation)
+        public CommandData NameRange(string range, string rangeName)
         {
             try
             {
-                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Formula = equation.Trim('"'); // Remark-cz: Expect starting with '='
+                Globals.ThisAddIn.Application.get_Range(range).Name = rangeName;
             }
             catch (Exception) { }
             return null;
@@ -310,19 +277,13 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
-        public CommandData SetEquation(string cell, string equation)
-        {
-            if (TryGetRowCol(cell, out int row, out int col))
-                ActiveWorksheet.Cells[row, col].Formula = equation.Trim('"'); // Remark-cz: Expect starting with '='
-            return null;
-        }
         public CommandData SetCell(string row, string col, string value)
         {
             try
             {
                 ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Value = ParseValue(value);
             }
-            catch (Exception){}
+            catch (Exception) { }
             return null;
         }
         public CommandData SetCellValues(string start, string csv)
@@ -338,6 +299,63 @@ namespace ExcelCommander.Addin
                         sheet.Cells[row + dRow, col + dCol].Value = ParseValue(values[dCol]);
                 }
             }
+            return null;
+        }
+        public CommandData SetEquation(string cell, string equation)
+        {
+            if (TryGetRowCol(cell, out int row, out int col))
+                ActiveWorksheet.Cells[row, col].Formula = equation.Trim('"'); // Remark-cz: Expect starting with '='
+            return null;
+        }
+        public CommandData SetEquation(string row, string col, string equation)
+        {
+            try
+            {
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Formula = equation.Trim('"'); // Remark-cz: Expect starting with '='
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData SetColor(string cell, string color)
+        {
+            if (TryGetRowCol(cell, out int row, out int col))
+                ActiveWorksheet.Cells[row, col].Style.Font.Color = ParseColor(color);
+            return null;
+        }
+        public CommandData SetColor(string row, string col, string color)
+        {
+            try
+            {
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Style.Font.Color = ParseColor(color);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData SetFontColor(string range, string color)
+        {
+            try
+            {
+                Application.Range[range].Style.Font.Color = ParseColor(color);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData SetFontSize(string range, string size)
+        {
+            try
+            {
+                Application.Range[range].Style.Font.Size = int.Parse(size);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData SetValueFormat(string range, string format)
+        {
+            try
+            {
+                Application.Range[range].NumberFormat = format; // Remark-cz: Text or NumberFormat?
+            }
+            catch (Exception) { }
             return null;
         }
         #endregion
