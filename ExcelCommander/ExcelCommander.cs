@@ -90,6 +90,14 @@ namespace ExcelCommander
                 Contents = $"{nameof(GetCell)} \"{cell}\""
             });
         }
+        public CommandData GetCell(int row, int col)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(GetCell)} {row} {col}"
+            });
+        }
         public CommandData GetCell(string row, string col)
         {
             return Client.SendAndReceive(new CommandData
@@ -104,6 +112,14 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(GetCellColor)} \"{cell}\""
+            });
+        }
+        public CommandData GetCellColor(int row, int col)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(GetCellColor)} {row} {col}"
             });
         }
         public CommandData GetCellColor(string row, string col)
@@ -122,6 +138,14 @@ namespace ExcelCommander
                 Contents = $"{nameof(GetCellName)} \"{cell}\""
             });
         }
+        public CommandData GetCellName(int row, int col)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(GetCellName)} {row} {col}"
+            });
+        }
         public CommandData GetCellName(string row, string col)
         {
             return Client.SendAndReceive(new CommandData
@@ -136,6 +160,14 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(GetCellFontWeight)} \"{cell}\""
+            });
+        }
+        public CommandData GetCellFontWeight(int row, int col)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(GetCellFontWeight)} {row} {col}"
             });
         }
         public CommandData GetCellFontWeight(string row, string col)
@@ -154,6 +186,14 @@ namespace ExcelCommander
                 Contents = $"{nameof(GetCellValueFormat)} \"{cell}\""
             });
         }
+        public CommandData GetCellValueFormat(int row, int col)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(GetCellValueFormat)} {row} {col}"
+            });
+        }
         public CommandData GetCellValueFormat(string row, string col)
         {
             return Client.SendAndReceive(new CommandData
@@ -168,6 +208,14 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(GetCellValue)} \"{cell}\""
+            });
+        }
+        public CommandData GetCellValue(int row, int col)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(GetCellValue)} {row} {col}"
             });
         }
         public CommandData GetCellValue(string row, string col)
@@ -186,12 +234,28 @@ namespace ExcelCommander
                 Contents = $"{nameof(GetCellFormula)} \"{cell}\""
             });
         }
+        public CommandData GetCellFormula(int row, int col)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(GetCellFormula)} {row} {col}"
+            });
+        }
         public CommandData GetCellFormula(string row, string col)
         {
             return Client.SendAndReceive(new CommandData
             {
                 CommandType = "Development",
                 Contents = $"{nameof(GetCellFormula)} {row} {col}"
+            });
+        }
+        public CommandData GetCellValues(string cell, int rows, int cols)
+        {
+            return Client.SendAndReceive(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(GetCellValues)} \"{cell}\" \"{rows}\" \"{cols}\""
             });
         }
         public CommandData GetCellValues(string cell, string rows, string cols)
@@ -403,6 +467,15 @@ namespace ExcelCommander
             });
             return null;
         }
+        public CommandData SetFontSize(string range, int size)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontSize)} \"{range}\" {size}"
+            });
+            return null;
+        }
         public CommandData SetFontSize(string range, string size)
         {
             Client.Send(new CommandData
@@ -430,6 +503,15 @@ namespace ExcelCommander
             });
             return null;
         }
+        public CommandData Color(int row, int col, string color)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Color)} {row} {col} \"{color}\""
+            });
+            return null;
+        }
         public CommandData Color(string row, string col, string color)
         {
             Client.Send(new CommandData
@@ -448,12 +530,39 @@ namespace ExcelCommander
             });
             return null;
         }
+        public CommandData SetEquation(int row, int col, string equation)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetEquation)} {row} {col} \"{equation}\""
+            });
+            return null;
+        }
         public CommandData SetEquation(string row, string col, string equation)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
                 Contents = $"{nameof(SetEquation)} {row} {col} \"{equation}\""
+            });
+            return null;
+        }
+        public CommandData Set(string range, double value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Set)} \"{range}\" {value}"
+            });
+            return null;
+        }
+        public CommandData Set(string range, int value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Set)} \"{range}\" {value}"
             });
             return null;
         }
@@ -466,12 +575,57 @@ namespace ExcelCommander
             });
             return null;
         }
+        public CommandData SetCell(string cell, int value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetCell)} \"{cell}\" {value}"
+            });
+            return null;
+        }
+        public CommandData SetCell(string cell, double value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetCell)} \"{cell}\" {value}"
+            });
+            return null;
+        }
         public CommandData SetCell(string cell, string value)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
                 Contents = $"{nameof(SetCell)} \"{cell}\" \"{value}\""
+            });
+            return null;
+        }
+        public CommandData SetCell(int row, int col, double value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetCell)} {row} {col} {value}"
+            });
+            return null;
+        }
+        public CommandData SetCell(int row, int col, int value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetCell)} {row} {col} {value}"
+            });
+            return null;
+        }
+        public CommandData SetCell(int row, int col, string value)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetCell)} {row} {col} \"{value}\""
             });
             return null;
         }
@@ -506,8 +660,8 @@ namespace ExcelCommander
         {
             Client.Send(new CommandData
             {
-                CommandType = "Development",
-                Contents = $"{nameof(SetCellValues)} \"{start}\" \"{csv}\""
+                CommandType = $"SetCellValues \"{start}\"",
+                Contents = csv
             });
             return null;
         }

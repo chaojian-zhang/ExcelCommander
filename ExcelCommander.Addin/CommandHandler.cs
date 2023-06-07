@@ -29,7 +29,10 @@ namespace ExcelCommander.Addin
         #region Entry Point
         internal CommandData Handle(CommandData data)
         {
-            return HandleGeneralCommands();
+            if (data.CommandType.Split(' ').First() == nameof(SetCellValues))
+                return SetCellValues(data.CommandType.Split(' ').Last(), data.Contents);
+            else
+                return HandleGeneralCommands();
 
             CommandData HandleGeneralCommands()
             {
@@ -64,8 +67,6 @@ namespace ExcelCommander.Addin
             {
                 return Error(e.Message);
             }
-
-            return Ok();
         }
         public CommandData GetCell(string cell)
         {
