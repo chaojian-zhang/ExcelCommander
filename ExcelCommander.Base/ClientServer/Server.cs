@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System;
 using ExcelCommander.Base.Serialization;
+using System.Linq;
 
 namespace ExcelCommander.Base.ClientServer
 {
@@ -22,7 +23,20 @@ namespace ExcelCommander.Base.ClientServer
         public int Start()
         {
             Service = new BidirectionalServerClient();
-            ServicePort = Service.StartServer((length, data, client) => Callback(length, data, client));
+            ServicePort = Service.StartServer((length, data, client) =>
+            {
+                // Deal with multiple frames
+                int remainingSize = length;
+                while (remainingSize > 0)
+                {
+                    int startIndex = length - remainingSize;
+                    int frameSize = BitConverter.ToInt32(data, startIndex);
+                    Callback(frameSize, data, startIndex, client);
+                    remainingSize -= frameSize;
+                    if (remainingSize < 0)
+                        throw new ApplicationException("Frame size error.");
+                }
+            });
             return ServicePort;
         }
         public void Stop()
@@ -32,11 +46,11 @@ namespace ExcelCommander.Base.ClientServer
         #endregion
 
         #region Data Marshal
-        private void Callback(int length, byte[] data, Socket client)
+        private void Callback(int length, byte[] data, int offset, Socket client)
         {
             try
             {
-                CommandData command = CommandData.Deserialize(data, length);
+                CommandData command = CommandData.Deserialize(data, length, offset);
                 CommandData reply = CommandHandler?.Invoke(command);
                 if (reply != null)
                     Service.Send(client, reply.Serialize());

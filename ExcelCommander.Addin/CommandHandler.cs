@@ -6,9 +6,7 @@ using System.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Text.RegularExpressions;
 using System.Reflection;
-using Microsoft.Office.Tools.Excel;
 using Microsoft.Office.Interop.Excel;
-using System.Drawing;
 
 namespace ExcelCommander.Addin
 {

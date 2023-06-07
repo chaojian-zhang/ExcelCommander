@@ -8,7 +8,7 @@ namespace ExcelCommander.Base.Network
     {
         #region Config
         public static readonly string HostAddress = "127.0.0.1";
-        public const int BufferSize = 64 * 1024 * 1024; // 64 Mb
+        public const int BufferSize = BidirectionalServerClient.BufferSize;
         #endregion
 
         #region Lifetime
