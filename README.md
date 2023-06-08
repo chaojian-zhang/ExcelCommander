@@ -46,6 +46,7 @@ connection.SetCell("A2", "15")
 
 ## Supported Commands
 
+* Get range
 * GetCell cell
 * GetCell row, col
 * GetCellColor cell
@@ -70,29 +71,60 @@ connection.SetCell("A2", "15")
 * HasNamedRange name
 * HasSheet name
 * HasTable name
+* Align range, option
 * Background range, color
-* Bold range, weight
+* Bold range
+* Bold range, toggle
+* Border range, weight
+* Cell range, value
 * Clear range
+* ClearAll 
 * ClearFormat range
+* Color range, color
+* Color row, col, color
 * CreateSheet sheetName
 * CreateTable range, tableName
 * CSV start, filename
 * Fit range
+* FitAll 
+* Italic range
+* Italic range, toggle
+* Merge range
 * MoveSheetBefore sheetName, otherSheetName
 * NameRange range, name
+* Outline range
 * SetCell cell, value
 * SetCell row, col, value
 * SetCellName cell, name
 * SetCellName row, col, name
 * SetCellValues start, csv
-* SetColor cell, color
-* SetColor row, col, color
 * SetEquation cell, equation
 * SetEquation row, col, equation
 * SetFontColor range, color
 * SetFontSize range, size
 * SetValueFormat range, format
+* Select range
 * GoToSheet sheetName
+* Apply 
+* Apply range
+* Copy 
+* Duplicate 
+* Fill
+* Fill range
+* Fill range, direction
+* Paste 
+* Paste range
+* Save 
+* Save outputFilePath
+* Sort 
+* Sort range
+* Evaluate scriptPath
+* Random range
+* Random range, multiplier
+* Random range, from, to
+* ETL range, outputCell
+* ETL range, outputCell, percentage
+
 
 In C#/Python use, call explicit functions through `ExcelCommander` or `XlsxCommander`, or use `ExecuteCommand()` method.
 
@@ -116,6 +148,150 @@ Weights:
 * Medium
 * Thick
 * Thin
+
+### Color Names
+
+* Transparent
+* AliceBlue
+* AntiqueWhite
+* Aqua
+* Aquamarine
+* Azure
+* Beige
+* Bisque
+* Black
+* BlanchedAlmond
+* Blue
+* BlueViolet
+* Brown
+* BurlyWood
+* CadetBlue
+* Chartreuse
+* Chocolate
+* Coral
+* CornflowerBlue
+* Cornsilk
+* Crimson
+* Cyan
+* DarkBlue
+* DarkCyan
+* DarkGoldenrod
+* DarkGray
+* DarkGreen
+* DarkKhaki
+* DarkMagenta
+* DarkOliveGreen
+* DarkOrange
+* DarkOrchid
+* DarkRed
+* DarkSalmon
+* DarkSeaGreen
+* DarkSlateBlue
+* DarkSlateGray
+* DarkTurquoise
+* DarkViolet
+* DeepPink
+* DeepSkyBlue
+* DimGray
+* DodgerBlue
+* Firebrick
+* FloralWhite
+* ForestGreen
+* Fuchsia
+* Gainsboro
+* GhostWhite
+* Gold
+* Goldenrod
+* Gray
+* Green
+* GreenYellow
+* Honeydew
+* HotPink
+* IndianRed
+* Indigo
+* Ivory
+* Khaki
+* Lavender
+* LavenderBlush
+* LawnGreen
+* LemonChiffon
+* LightBlue
+* LightCoral
+* LightCyan
+* LightGoldenrodYellow
+* LightGreen
+* LightGray
+* LightPink
+* LightSalmon
+* LightSeaGreen
+* LightSkyBlue
+* LightSlateGray
+* LightSteelBlue
+* LightYellow
+* Lime
+* LimeGreen
+* Linen
+* Magenta
+* Maroon
+* MediumAquamarine
+* MediumBlue
+* MediumOrchid
+* MediumPurple
+* MediumSeaGreen
+* MediumSlateBlue
+* MediumSpringGreen
+* MediumTurquoise
+* MediumVioletRed
+* MidnightBlue
+* MintCream
+* MistyRose
+* Moccasin
+* NavajoWhite
+* Navy
+* OldLace
+* Olive
+* OliveDrab
+* Orange
+* OrangeRed
+* Orchid
+* PaleGoldenrod
+* PaleGreen
+* PaleTurquoise
+* PaleVioletRed
+* PapayaWhip
+* PeachPuff
+* Peru
+* Pink
+* Plum
+* PowderBlue
+* Purple
+* Red
+* RosyBrown
+* RoyalBlue
+* SaddleBrown
+* Salmon
+* SandyBrown
+* SeaGreen
+* SeaShell
+* Sienna
+* Silver
+* SkyBlue
+* SlateBlue
+* SlateGray
+* Snow
+* SpringGreen
+* SteelBlue
+* Tan
+* Teal
+* Thistle
+* Tomato
+* Turquoise
+* Violet
+* Wheat
+* White
+* WhiteSmoke
+* Yellow
+* YellowGreen
 
 ### Fill Directions
 
