@@ -24,7 +24,9 @@ namespace ExcelCommander
             {
                 try
                 {
-                    new ExcelCommander(port).Execute(scriptLines);
+                    var commander = new ExcelCommander(port);
+                    commander.Execute(scriptLines);
+                    commander.Dispose();
                 }
                 catch (SocketException)
                 {

@@ -116,3 +116,10 @@ Weights:
 * Medium
 * Thick
 * Thin
+
+### Fill Directions
+
+* Up
+* Down
+* Left
+* Right

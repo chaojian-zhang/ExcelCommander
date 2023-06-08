@@ -14,6 +14,16 @@ namespace XlsxCommander
             OutputFile = outputFile;
         }
         public string OutputFile { get; }
+        private MethodInfo[] _CommandMethods;
+        private MethodInfo[] CommandMethods
+        {
+            get
+            {
+                if (_CommandMethods == null)
+                    _CommandMethods = GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).ToArray();
+                return _CommandMethods;
+            }
+        }
         #endregion
 
         #region State
@@ -52,7 +62,7 @@ namespace XlsxCommander
         {
             string[] parameters = command.SplitParameters(true);
 
-            var methods = GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            var methods = CommandMethods;
             var match = methods.FirstOrDefault(m =>
                 m.Name == parameters[0]
                 && m.GetParameters().Length == parameters.Length - 1
@@ -195,6 +205,10 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
+        public CommandData Bold(string range)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData Bold(string range, string weight)
         {
             throw new NotImplementedException();
@@ -208,6 +222,10 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData Clear(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData ClearAll()
         {
             throw new NotImplementedException();
         }
@@ -231,6 +249,18 @@ namespace XlsxCommander
         {
             throw new NotFiniteNumberException();
         }
+        public CommandData FitAll()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Italic(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Italic(string range, string toggle)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData Merge(string range)
         {
             throw new NotImplementedException();
@@ -240,6 +270,10 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData NameRange(string range, string name)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Outline(string range)
         {
             throw new NotImplementedException();
         }
@@ -294,7 +328,101 @@ namespace XlsxCommander
         #endregion
 
         #region State Management Routines
+        public CommandData Select(string range)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData GoToSheet(string sheetName)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Macros
+        public CommandData Apply()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Apply(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Copy()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Duplicate()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Fill()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Fill(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Fill(string range, string direction)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Paste()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Paste(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Save()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Save(string outputFilePath)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Sort()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Sort(string range)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Programming
+        public CommandData Evaluate(string scriptPath)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Utilities
+        public CommandData Random(string range)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CommandData Random(string range, string multiplier)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CommandData Random(string range, string from, string to)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Finance
+        public CommandData ETL(string range, string outputCell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData ETL(string range, string outputCell, string percentage)
         {
             throw new NotImplementedException();
         }

@@ -13,6 +13,19 @@ namespace ExcelCommander.Addin
 {
     internal class CommandHandler: ICommander
     {
+        #region Properties
+        private MethodInfo[] _CommandMethods;
+        private MethodInfo[] CommandMethods
+        {
+            get
+            {
+                if (_CommandMethods == null)
+                    _CommandMethods = GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly).ToArray();
+                return _CommandMethods;
+            }
+        }
+        #endregion
+
         #region Preset Replies
         private CommandData Ok() => new CommandData()
         {
@@ -38,7 +51,7 @@ namespace ExcelCommander.Addin
             {
                 string[] parameters = data.Contents.SplitParameters(true);
 
-                var methods = GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+                var methods = CommandMethods;
                 var match = methods.FirstOrDefault(m =>
                     m.Name == parameters[0]
                     && m.GetParameters().Length == parameters.Length - 1
@@ -191,7 +204,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                Application.Range[range].Style.HorizontalAlignment = (XlHAlign)Enum.Parse(typeof(XlHAlign), $"xlHAlign{option}"); // Remark-cz: E.g. XlHAlign.xlHAlignLeft
+                Application.Range[range].HorizontalAlignment = (XlHAlign)Enum.Parse(typeof(XlHAlign), $"xlHAlign{option}"); // Remark-cz: E.g. XlHAlign.xlHAlignLeft
             }
             catch (Exception) { }
             return null;
@@ -200,16 +213,25 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                Application.Range[range].Style.Interior.Color = ParseColor(color);
+                Application.Range[range].Interior.Color = ParseColor(color);
             }
             catch (Exception) { }
             return null;
         }
-        public CommandData Bold(string range, string weight)
+        public CommandData Bold(string range)
         {
             try
             {
-                Application.Range[range].Style.Font.Bold = bool.Parse(weight);
+                Application.Range[range].Font.Bold = !Application.Range[range].Font.Bold;
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Bold(string range, string toggle)
+        {
+            try
+            {
+                Application.Range[range].Font.Bold = bool.Parse(toggle);
             }
             catch (Exception) { }
             return null;
@@ -218,7 +240,9 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                Application.Range[range].BorderAround2(null, (XlBorderWeight)Enum.Parse(typeof(XlBorderWeight), $"xl{weight}"), XlColorIndex.xlColorIndexAutomatic);
+                var w = (XlBorderWeight)Enum.Parse(typeof(XlBorderWeight), $"xl{weight}");
+                ActiveWorksheet.Range[range].Borders.Weight = w;
+                ActiveWorksheet.Range[range].Borders.ColorIndex = XlColorIndex.xlColorIndexAutomatic;
             }
             catch (Exception) { }
             return null;
@@ -237,6 +261,15 @@ namespace ExcelCommander.Addin
             try
             {
                 Application.Range[range].Clear();
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData ClearAll()
+        {
+            try
+            {
+                ActiveWorksheet.UsedRange.Clear();
             }
             catch (Exception) { }
             return null;
@@ -284,6 +317,33 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
+        public CommandData FitAll()
+        {
+            try
+            {
+                ActiveWorksheet.UsedRange.Columns.AutoFit();
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Italic(string range)
+        {
+            try
+            {
+                ActiveWorksheet.Range[range].Font.Italic = !ActiveWorksheet.Range[range].Font.Italic;
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Italic(string range, string toggle)
+        {
+            try
+            {
+                ActiveWorksheet.Range[range].Font.Italic = bool.Parse(toggle);
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData Merge(string range)
         {
             try
@@ -307,6 +367,15 @@ namespace ExcelCommander.Addin
             try
             {
                 Globals.ThisAddIn.Application.get_Range(range).Name = ParseString(rangeName);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Outline(string range)
+        {
+            try
+            {
+                ActiveWorksheet.Range[range].AutoOutline();
             }
             catch (Exception) { }
             return null;
@@ -377,7 +446,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                Application.Range[range].Style.Font.Color = ParseColor(color);
+                Application.Range[range].Font.Color = ParseColor(color);
             }
             catch (Exception){}
             return null;
@@ -386,7 +455,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Style.Font.Color = ParseColor(color);
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Font.Color = ParseColor(color);
             }
             catch (Exception) { }
             return null;
@@ -395,7 +464,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                Application.Range[range].Style.Font.Color = ParseColor(color);
+                Application.Range[range].Font.Color = ParseColor(color);
             }
             catch (Exception) { }
             return null;
@@ -404,7 +473,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                Application.Range[range].Style.Font.Size = int.Parse(size);
+                Application.Range[range].Font.Size = int.Parse(size);
             }
             catch (Exception) { }
             return null;
@@ -421,10 +490,193 @@ namespace ExcelCommander.Addin
         #endregion
 
         #region State Management Routines
+        public CommandData Select(string range)
+        {
+            try
+            {
+                ActiveWorksheet.Range[range].Select();
+            }
+            catch (Exception) {}
+            return null;
+        }
         public CommandData GoToSheet(string sheetName)
         {
-            GetWorkSheet(ParseString(sheetName)).Select();
+            try
+            {
+                GetWorkSheet(ParseString(sheetName)).Select();
+            }
+            catch (Exception){}
             return null;
+        }
+        #endregion
+
+        #region Macros
+        public CommandData Apply()
+        {
+            try
+            {
+                Application.DoubleClick();
+            }
+            catch (Exception){}
+            return null;
+        }
+        public CommandData Apply(string range)
+        {
+            try
+            {
+                ActiveWorksheet.Range[range].FillDown();
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Copy()
+        {
+            try
+            {
+                Application.Selection.Copy(); // Remark-cz: Pending testing
+            }
+            catch (Exception){}
+            return null;
+        }
+        public CommandData Duplicate()
+        {
+            try
+            {
+                ActiveWorksheet.Copy(ActiveWorksheet);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Fill()
+        {
+            try
+            {
+                Application.Selection.AutoFill(Application.Selection);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Fill(string range)
+        {
+            try
+            {
+                ActiveWorksheet.Range[range].AutoFill(ActiveWorksheet.Range[range]);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Fill(string range, string direction)
+        {
+            try
+            {
+                switch (direction.ToLower())
+                {
+                    case "Up":
+                        ActiveWorksheet.Range[range].FillUp();
+                        break;
+                    case "Left":
+                        ActiveWorksheet.Range[range].FillLeft();
+                        break;
+                    case "Right":
+                        ActiveWorksheet.Range[range].FillRight();
+                        break;
+                    case "Down":
+                        ActiveWorksheet.Range[range].FillDown();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Paste()
+        {
+            try
+            {
+                ActiveWorksheet.Paste();
+            }
+            catch (Exception){}
+            return null;
+        }
+        public CommandData Paste(string range)
+        {
+            try
+            {
+                ActiveWorksheet.Paste(ActiveWorksheet.Range[range]);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Save()
+        {
+            try
+            {
+                Application.ActiveWorkbook.Save();
+            }
+            catch (Exception){}
+            return null;
+        }
+        public CommandData Save(string outputFilePath)
+        {
+            try
+            {
+                Application.ActiveWorkbook.SaveAs(outputFilePath, XlFileFormat.xlWorkbookNormal);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Sort()
+        {
+            try
+            {
+                Application.Selection.Sort(); // Remark-cz: Pending test
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Sort(string range)
+        {
+            try
+            {
+                ActiveWorksheet.Range[range].Sort(); // Remark-cz: Pending test
+            }
+            catch (Exception){}
+            return null;
+        }
+        #endregion
+
+        #region Programming
+        public CommandData Evaluate(string scriptPath)
+        {
+            return null; // Remark-cz: Don't handle this in Excel
+        }
+        #endregion
+
+        #region Utilities
+        public CommandData Random(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Random(string range, string multiplier)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Random(string range, string from, string to)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Finance
+        public CommandData ETL(string range, string outputCell)
+        {
+            return null; // Remark-cz: Not implemented
+        }
+
+        public CommandData ETL(string range, string outputCell, string percentage)
+        {
+            return null; // Remark-cz: Not implemented
         }
         #endregion
 
@@ -528,7 +780,7 @@ namespace ExcelCommander.Addin
         }
         private static int ParseColor(string color)
         {
-            return System.Drawing.ColorTranslator.ToOle((System.Drawing.Color)Enum.Parse(typeof(System.Drawing.Color), color));
+            return System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.FromName(color));
         }
         #endregion
     }

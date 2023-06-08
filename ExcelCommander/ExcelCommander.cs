@@ -1,7 +1,6 @@
 ﻿using ExcelCommander.Base.ClientServer;
 using ExcelCommander.Base.Serialization;
 using ExcelCommander.Base;
-using System.Drawing;
 
 namespace ExcelCommander
 {
@@ -31,6 +30,18 @@ namespace ExcelCommander
         #endregion
 
         #region Handling
+        public void ExecuteFile(string scriptPath)
+        {
+            if (System.IO.File.Exists(scriptPath))
+            {
+                var lines = File.ReadAllLines(Path.GetFullPath(scriptPath));
+                Execute(lines, false);
+            }
+        }
+        public void Execute(string scripts)
+        {
+            Execute(scripts.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries), false);
+        }
         public void Execute(string[] commands, bool interpretIfNull = true)
         {
             if (commands == null && interpretIfNull)
@@ -47,10 +58,12 @@ namespace ExcelCommander
                 foreach (var command in commands)
                     ExecuteCommand(command);
             }
-            Dispose();
         }
         public void ExecuteCommand(string command)
         {
+            if (string.IsNullOrWhiteSpace(command) || command.StartsWith("//") || command.StartsWith('#'))
+                return;
+
             if (command == "Help")
                 Console.WriteLine(CommanderHelper.GetHelpString());
             else if (command.StartsWith("Get"))
@@ -368,12 +381,21 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData Bold(string range, string weight)
+        public CommandData Bold(string range)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetValueFormat)} {range} {weight}"
+                Contents = $"{nameof(SetValueFormat)} {range}"
+            });
+            return null;
+        }
+        public CommandData Bold(string range, string toggle)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetValueFormat)} {range} {toggle}"
             });
             return null;
         }
@@ -410,6 +432,15 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(Clear)} {range}"
+            });
+            return null;
+        }
+        public CommandData ClearAll()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(ClearAll)}"
             });
             return null;
         }
@@ -458,6 +489,34 @@ namespace ExcelCommander
             });
             return null;
         }
+        public CommandData FitAll()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(FitAll)}"
+            });
+            return null;
+        }
+        public CommandData Italic(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Italic)} {range}"
+            });
+            return null;
+        }
+
+        public CommandData Italic(string range, string toggle)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Italic)} {toggle}"
+            });
+            return null;
+        }
         public CommandData Merge(string range)
         {
             Client.Send(new CommandData
@@ -482,6 +541,15 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(NameRange)} {range} \"{rangeName}\""
+            });
+            return null;
+        }
+        public CommandData Outline(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Outline)} {range}"
             });
             return null;
         }
@@ -668,12 +736,203 @@ namespace ExcelCommander
         #endregion
 
         #region Interface Calls - Management
+        public CommandData Select(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Select)} {range}"
+            });
+            return null;
+        }
         public CommandData GoToSheet(string sheetName)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
                 Contents = $"{nameof(GoToSheet)} \"{sheetName}\""
+            });
+            return null;
+        }
+        #endregion
+
+        #region Macros
+        public CommandData Apply()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Apply)}"
+            });
+            return null;
+        }
+        public CommandData Apply(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Apply)} {range}"
+            });
+            return null;
+        }
+        public CommandData Copy()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Copy)}"
+            });
+            return null;
+        }
+        public CommandData Duplicate()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Duplicate)}"
+            });
+            return null;
+        }
+        public CommandData Fill()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Fill)}"
+            });
+            return null;
+        }
+
+        public CommandData Fill(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Fill)} {range}"
+            });
+            return null;
+        }
+        public CommandData Fill(string range, string direction)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Fill)} {range} {direction}"
+            });
+            return null;
+        }
+        public CommandData Paste()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Paste)}"
+            });
+            return null;
+        }
+        public CommandData Paste(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Paste)} {range}"
+            });
+            return null;
+        }
+        public CommandData Save()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Save)}"
+            });
+            return null;
+        }
+        public CommandData Save(string outputFilePath)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Save)} \"{outputFilePath}\""
+            });
+            return null;
+        }
+        public CommandData Sort()
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Sort)}"
+            });
+            return null;
+        }
+        public CommandData Sort(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Sort)} {range}"
+            });
+            return null;
+        }
+        #endregion
+
+        #region Programming
+        public CommandData Evaluate(string scriptPath)
+        {
+            Execute(scriptPath);
+            return null;
+        }
+        #endregion
+
+        #region Utilities
+        public CommandData Random(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Random)} {range}"
+            });
+            return null;
+        }
+
+        public CommandData Random(string range, string multiplier)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Random)} {range} {multiplier}"
+            });
+            return null;
+        }
+
+        public CommandData Random(string range, string from, string to)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Random)} {range} {from} {to}"
+            });
+            return null;
+        }
+        #endregion
+
+        #region Finance
+        public CommandData ETL(string range, string outputCell)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(ETL)} {range} {outputCell}"
+            });
+            return null;
+        }
+        public CommandData ETL(string range, string outputCell, string percentage)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(ETL)} {range} {outputCell} {percentage}"
             });
             return null;
         }

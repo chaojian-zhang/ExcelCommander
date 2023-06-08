@@ -51,10 +51,12 @@ namespace ExcelCommander.Base
         #region Writing Routines
         CommandData Align(string range, string option);
         CommandData Background(string range, string color);
-        CommandData Bold(string range, string weight);
+        CommandData Bold(string range);
+        CommandData Bold(string range, string toggle);
         CommandData Border(string range, string weight);
         CommandData Cell(string range, string value);
         CommandData Clear(string range);
+        CommandData ClearAll();
         CommandData ClearFormat(string range);
         CommandData Color(string range, string color);
         CommandData Color(string row, string col, string color);
@@ -62,9 +64,13 @@ namespace ExcelCommander.Base
         CommandData CreateTable(string range, string tableName);
         CommandData CSV(string start, string filename);
         CommandData Fit(string range);
+        CommandData FitAll();
+        CommandData Italic(string range);
+        CommandData Italic(string range, string toggle);
         CommandData Merge(string range);
         CommandData MoveSheetBefore(string sheetName, string otherSheetName);
         CommandData NameRange(string range, string name);
+        CommandData Outline(string range);
         CommandData SetCell(string cell, string value);
         CommandData SetCell(string row, string col, string value);
         CommandData SetCellName(string cell, string name);
@@ -78,7 +84,39 @@ namespace ExcelCommander.Base
         #endregion
 
         #region State Management Routines
+        CommandData Select(string range);
         CommandData GoToSheet(string sheetName);
+        #endregion
+
+        #region Macro
+        CommandData Apply();
+        CommandData Apply(string range);
+        CommandData Copy();
+        CommandData Duplicate();
+        CommandData Fill(); // Remark-cz: Alias to Appy()
+        CommandData Fill(string range);
+        CommandData Fill(string range, string direction);
+        CommandData Paste();
+        CommandData Paste(string range);
+        CommandData Save();
+        CommandData Save(string outputFilePath);
+        CommandData Sort();
+        CommandData Sort(string range);
+        #endregion
+
+        #region Programming
+        CommandData Evaluate(string scriptPath);
+        #endregion
+
+        #region Utilities
+        CommandData Random(string range);
+        CommandData Random(string range, string multiplier);
+        CommandData Random(string range, string from, string to);
+        #endregion
+
+        #region Finance
+        CommandData ETL(string range, string outputCell);
+        CommandData ETL(string range, string outputCell, string percentage);
         #endregion
     }
 }
