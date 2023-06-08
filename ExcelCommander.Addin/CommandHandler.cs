@@ -780,7 +780,17 @@ namespace ExcelCommander.Addin
         }
         private static int ParseColor(string color)
         {
-            return System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.FromName(color));
+            if (color.StartsWith("#"))
+            {
+                return System.Drawing.ColorTranslator.ToOle(System.Drawing.ColorTranslator.FromHtml(color));
+            }
+            else if (color.Contains(","))
+            {
+                string[] parts = color.Split(',');
+                return System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.FromArgb(int.Parse(parts[0]), int.Parse(parts[1]), int.Parse(parts[2])));
+            }
+            else
+                return System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.FromName(color));
         }
         #endregion
     }
