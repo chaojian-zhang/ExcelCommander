@@ -377,7 +377,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetFontSize)} {range} {color}"
+                Contents = $"{nameof(Background)} {range} {color}"
             });
             return null;
         }
@@ -386,7 +386,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetValueFormat)} {range}"
+                Contents = $"{nameof(Bold)} {range}"
             });
             return null;
         }
@@ -395,7 +395,7 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetValueFormat)} {range} {toggle}"
+                Contents = $"{nameof(Bold)} {range} {toggle}"
             });
             return null;
         }
