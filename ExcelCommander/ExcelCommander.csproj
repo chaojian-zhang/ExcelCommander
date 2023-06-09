@@ -8,12 +8,14 @@
 		<VersionPrefix>0.1.7</VersionPrefix>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+		<ApplicationIcon>Icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <Content Include="excelcommander.py">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Include="Icon.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
