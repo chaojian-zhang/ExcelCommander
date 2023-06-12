@@ -283,6 +283,24 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
+        public CommandData Color(string range, string color)
+        {
+            try
+            {
+                Application.Range[range].Font.Color = ParseColor(color);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Color(string row, string col, string color)
+        {
+            try
+            {
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Font.Color = ParseColor(color);
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData CSV(string start, string filename)
         {
             try
@@ -322,6 +340,21 @@ namespace ExcelCommander.Addin
             try
             {
                 ActiveWorksheet.UsedRange.Columns.AutoFit();
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Formula(string cell, string equation)
+        {
+            if (TryGetRowCol(cell, out int row, out int col))
+                ActiveWorksheet.Cells[row, col].Formula = ParseString(equation); // Remark-cz: Expect starting with '='
+            return null;
+        }
+        public CommandData Formula(string row, string col, string equation)
+        {
+            try
+            {
+                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Formula = equation.Trim('"'); // Remark-cz: Expect starting with '='
             }
             catch (Exception) { }
             return null;
@@ -380,6 +413,24 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
+        public CommandData RenameSheet(string newName)
+        {
+            try
+            {
+                ActiveWorksheet.Name = newName;
+            }
+            catch (Exception){}
+            return null;
+        }
+        public CommandData RenameSheet(string originalName, string newName)
+        {
+            try
+            {
+                GetWorkSheet(originalName).Name = newName;
+            }
+            catch (Exception){ throw; }
+            return null;
+        }
         public CommandData SetCell(string cell, string value)
         {
             if (TryGetRowCol(cell, out int row, out int col))
@@ -427,39 +478,6 @@ namespace ExcelCommander.Addin
             }
             return null;
         }
-        public CommandData SetEquation(string cell, string equation)
-        {
-            if (TryGetRowCol(cell, out int row, out int col))
-                ActiveWorksheet.Cells[row, col].Formula = ParseString(equation); // Remark-cz: Expect starting with '='
-            return null;
-        }
-        public CommandData SetEquation(string row, string col, string equation)
-        {
-            try
-            {
-                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Formula = equation.Trim('"'); // Remark-cz: Expect starting with '='
-            }
-            catch (Exception) { }
-            return null;
-        }
-        public CommandData Color(string range, string color)
-        {
-            try
-            {
-                Application.Range[range].Font.Color = ParseColor(color);
-            }
-            catch (Exception){}
-            return null;
-        }
-        public CommandData Color(string row, string col, string color)
-        {
-            try
-            {
-                ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Font.Color = ParseColor(color);
-            }
-            catch (Exception) { }
-            return null;
-        }
         public CommandData SetFontColor(string range, string color)
         {
             try
@@ -483,6 +501,35 @@ namespace ExcelCommander.Addin
             try
             {
                 Application.Range[range].NumberFormat = format; // Remark-cz: Text or NumberFormat?
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData Width(string range, string width)
+        {
+            try
+            {
+                Application.Range[range].ColumnWidth = double.Parse(width);
+            }
+            catch (Exception) { }
+            return null;
+        }
+
+        public CommandData Wrap(string range)
+        {
+            try
+            {
+                Application.Range[range].WrapText = !Application.Range[range].WrapText;
+            }
+            catch (Exception) { }
+            return null;
+        }
+
+        public CommandData Wrap(string range, string toggle)
+        {
+            try
+            {
+                Application.Range[range].WrapText = bool.Parse(toggle);
             }
             catch (Exception) { }
             return null;

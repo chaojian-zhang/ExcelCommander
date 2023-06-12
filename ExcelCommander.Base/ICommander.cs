@@ -65,22 +65,27 @@ namespace ExcelCommander.Base
         CommandData CSV(string start, string filename);
         CommandData Fit(string range);
         CommandData FitAll();
+        CommandData Formula(string cell, string equation);
+        CommandData Formula(string row, string col, string equation);
         CommandData Italic(string range);
         CommandData Italic(string range, string toggle);
         CommandData Merge(string range);
         CommandData MoveSheetBefore(string sheetName, string otherSheetName);
         CommandData NameRange(string range, string name);
         CommandData Outline(string range);
+        CommandData RenameSheet(string newName);
+        CommandData RenameSheet(string originalName, string newName);
         CommandData SetCell(string cell, string value);
         CommandData SetCell(string row, string col, string value);
         CommandData SetCellName(string cell, string name);
         CommandData SetCellName(string row, string col, string name);
         CommandData SetCellValues(string start, string csv);
-        CommandData SetEquation(string cell, string equation);
-        CommandData SetEquation(string row, string col, string equation);
         CommandData SetFontColor(string range, string color);
         CommandData SetFontSize(string range, string size);
         CommandData SetValueFormat(string range, string format);
+        CommandData Width(string range, string width);
+        CommandData Wrap(string range);
+        CommandData Wrap(string range, string toggle);
         #endregion
 
         #region State Management Routines

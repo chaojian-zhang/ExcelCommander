@@ -233,6 +233,14 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
+        public CommandData Color(string range, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Color(string row, string col, string color)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData CreateSheet(string sheetName)
         {
             throw new NotImplementedException();
@@ -250,6 +258,14 @@ namespace XlsxCommander
             throw new NotFiniteNumberException();
         }
         public CommandData FitAll()
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Formula(string cell, string equation)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Formula(string row, string col, string equation)
         {
             throw new NotImplementedException();
         }
@@ -274,6 +290,14 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData Outline(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData RenameSheet(string newName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData RenameSheet(string originalName, string newName)
         {
             throw new NotImplementedException();
         }
@@ -305,23 +329,19 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
-        public CommandData Color(string range, string color)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData Color(string row, string col, string color)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData SetEquation(string cell, string equation)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData SetEquation(string row, string col, string equation)
-        {
-            throw new NotImplementedException();
-        }
         public CommandData SetFontColor(string range, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Width(string range, string width)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Wrap(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Wrap(string range, string toggle)
         {
             throw new NotImplementedException();
         }

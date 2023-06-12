@@ -553,42 +553,6 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData SetValueFormat(string range, string format)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(SetValueFormat)} {range} \"{format}\""
-            });
-            return null;
-        }
-        public CommandData SetFontSize(string range, int size)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(SetFontSize)} {range} {size}"
-            });
-            return null;
-        }
-        public CommandData SetFontSize(string range, string size)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(SetFontSize)} {range} {size}"
-            });
-            return null;
-        }
-        public CommandData SetFontColor(string range, string color)
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(SetFontColor)} {range} {color}"
-            });
-            return null;
-        }
         public CommandData Color(string range, string color)
         {
             Client.Send(new CommandData
@@ -616,12 +580,12 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData SetEquation(string cell, string equation)
+        public CommandData Formula(string cell, string equation)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetEquation)} {cell} \"{equation}\""
+                Contents = $"{nameof(Formula)} {cell} \"{equation}\""
             });
             return null;
         }
@@ -630,16 +594,34 @@ namespace ExcelCommander
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetEquation)} {row} {col} \"{equation}\""
+                Contents = $"{nameof(Formula)} {row} {col} \"{equation}\""
             });
             return null;
         }
-        public CommandData SetEquation(string row, string col, string equation)
+        public CommandData Formula(string row, string col, string equation)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(SetEquation)} {row} {col} \"{equation}\""
+                Contents = $"{nameof(Formula)} {row} {col} \"{equation}\""
+            });
+            return null;
+        }
+        public CommandData RenameSheet(string newName)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(RenameSheet)} \"{newName}\""
+            });
+            return null;
+        }
+        public CommandData RenameSheet(string originalName, string newName)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(RenameSheet)} \"{originalName}\" \"{newName}\""
             });
             return null;
         }
@@ -730,6 +712,69 @@ namespace ExcelCommander
             {
                 CommandType = $"SetCellValues {start}",
                 Contents = csv
+            });
+            return null;
+        }
+        public CommandData SetFontColor(string range, string color)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontColor)} {range} {color}"
+            });
+            return null;
+        }
+        public CommandData SetFontSize(string range, int size)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontSize)} {range} {size}"
+            });
+            return null;
+        }
+        public CommandData SetFontSize(string range, string size)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetFontSize)} {range} {size}"
+            });
+            return null;
+        }
+        public CommandData SetValueFormat(string range, string format)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(SetValueFormat)} {range} \"{format}\""
+            });
+            return null;
+        }
+        public CommandData Width(string range, string width)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Width)} {range} {width}"
+            });
+            return null;
+        }
+        public CommandData Wrap(string range)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Wrap)} {range}"
+            });
+            return null;
+        }
+        public CommandData Wrap(string range, string toggle)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(Wrap)} {toggle}"
             });
             return null;
         }
