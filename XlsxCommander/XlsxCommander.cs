@@ -253,6 +253,22 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
+        public CommandData DeleteColumn(string column)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData DeleteColumns(string columnRange)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData DeleteRow(string row)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData DeleteRows(string rowRange)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData Fit(string range)
         {
             throw new NotFiniteNumberException();
@@ -375,15 +391,15 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
-        public CommandData Fill()
-        {
-            throw new NotImplementedException();
-        }
         public CommandData Fill(string range)
         {
             throw new NotImplementedException();
         }
-        public CommandData Fill(string range, string direction)
+        public CommandData Fill(string from, string to)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData FillTo(string range, string direction)
         {
             throw new NotImplementedException();
         }

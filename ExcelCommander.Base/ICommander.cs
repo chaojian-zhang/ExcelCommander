@@ -1,6 +1,5 @@
 ﻿using ExcelCommander.Base.Serialization;
 using System.Linq;
-using System;
 using System.Text;
 
 namespace ExcelCommander.Base
@@ -63,6 +62,10 @@ namespace ExcelCommander.Base
         CommandData CreateSheet(string sheetName);
         CommandData CreateTable(string range, string tableName);
         CommandData CSV(string start, string filename);
+        CommandData DeleteColumn(string column);
+        CommandData DeleteColumns(string columnRange);
+        CommandData DeleteRow(string row);
+        CommandData DeleteRows(string rowRange);
         CommandData Fit(string range);
         CommandData FitAll();
         CommandData Formula(string cell, string equation);
@@ -98,9 +101,9 @@ namespace ExcelCommander.Base
         CommandData Apply(string range);
         CommandData Copy();
         CommandData Duplicate();
-        CommandData Fill(); // Remark-cz: Alias to Appy()
-        CommandData Fill(string range);
-        CommandData Fill(string range, string direction);
+        CommandData Fill(string range); // Remark-cz: Alias to Appy()
+        CommandData Fill(string from, string to);
+        CommandData FillTo(string range, string direction);
         CommandData Paste();
         CommandData Paste(string range);
         CommandData Save();

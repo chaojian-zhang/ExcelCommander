@@ -1,6 +1,8 @@
 ﻿using ExcelCommander.Base.ClientServer;
 using ExcelCommander.Base.Serialization;
 using ExcelCommander.Base;
+using System;
+using System.Data.Common;
 
 namespace ExcelCommander
 {
@@ -480,6 +482,42 @@ namespace ExcelCommander
             });
             return null;
         }
+        public CommandData DeleteColumn(string column)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(DeleteColumn)} {column}"
+            });
+            return null;
+        }
+        public CommandData DeleteColumns(string columnRange)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(DeleteColumns)} {columnRange}"
+            });
+            return null;
+        }
+        public CommandData DeleteRow(string row)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(DeleteRow)} {row}"
+            });
+            return null;
+        }
+        public CommandData DeleteRows(string rowRange)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(DeleteRows)} {rowRange}"
+            });
+            return null;
+        }
         public CommandData Fit(string range)
         {
             Client.Send(new CommandData
@@ -838,15 +876,6 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData Fill()
-        {
-            Client.Send(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(Fill)}"
-            });
-            return null;
-        }
 
         public CommandData Fill(string range)
         {
@@ -857,12 +886,21 @@ namespace ExcelCommander
             });
             return null;
         }
-        public CommandData Fill(string range, string direction)
+        public CommandData Fill(string from, string to)
         {
             Client.Send(new CommandData
             {
                 CommandType = "Development",
-                Contents = $"{nameof(Fill)} {range} {direction}"
+                Contents = $"{nameof(Fill)} {from} {to}"
+            });
+            return null;
+        }
+        public CommandData FillTo(string range, string direction)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(FillTo)} {range} {direction}"
             });
             return null;
         }

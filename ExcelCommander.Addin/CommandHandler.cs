@@ -326,6 +326,50 @@ namespace ExcelCommander.Addin
             TryCreateWorksheet(ParseString(sheetName));
             return null;
         }
+        public CommandData DeleteColumn(string column)
+        {
+            try
+            {
+                ActiveWorksheet.Columns[ParseValue(column)].Delete();
+            }
+            catch (Exception){}
+            return null;
+        }
+        public CommandData DeleteColumns(string columnRange)
+        {
+            try
+            {
+                if (columnRange.Contains(":"))
+                    ActiveWorksheet.Columns[columnRange].Delete();
+                else if (columnRange.Contains(","))
+                    foreach (var column in columnRange.Split(','))
+                        ActiveWorksheet.Columns[ParseValue(column)].Delete();
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData DeleteRow(string row)
+        {
+            try
+            {
+                ActiveWorksheet.Rows[ParseValue(row)].Delete();
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData DeleteRows(string rowRange)
+        {
+            try
+            {
+                if (rowRange.Contains(":"))
+                    ActiveWorksheet.Rows[rowRange].Delete();
+                else if (rowRange.Contains(","))
+                    foreach (var row in rowRange.Split(','))
+                        ActiveWorksheet.Rows[ParseValue(row)].Delete();
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData Fit(string range)
         {
             try
@@ -571,7 +615,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                ActiveWorksheet.Range[range].FillDown();
+                ActiveWorksheet.Range[range].FillDown();    // Remark-cz: Alternatively, we could try AutoFill with the first cell
             }
             catch (Exception) { }
             return null;
@@ -594,25 +638,25 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
-        public CommandData Fill()
-        {
-            try
-            {
-                Application.Selection.AutoFill(Application.Selection);
-            }
-            catch (Exception) { }
-            return null;
-        }
         public CommandData Fill(string range)
         {
             try
             {
-                ActiveWorksheet.Range[range].AutoFill(ActiveWorksheet.Range[range]);
+                Application.Selection.AutoFill(ActiveWorksheet.Range[range]);
             }
             catch (Exception) { }
             return null;
         }
-        public CommandData Fill(string range, string direction)
+        public CommandData Fill(string from, string to)
+        {
+            try
+            {
+                ActiveWorksheet.Range[from].AutoFill(ActiveWorksheet.Range[to]);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData FillTo(string range, string direction)
         {
             try
             {
@@ -703,15 +747,30 @@ namespace ExcelCommander.Addin
         #region Utilities
         public CommandData Random(string range)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Application.Range[range].Formula = "=RAND()";
+            }
+            catch (Exception) { }
+            return null;
         }
         public CommandData Random(string range, string multiplier)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Application.Range[range].Formula = $"=RAND()*{multiplier}";
+            }
+            catch (Exception) { }
+            return null;
         }
         public CommandData Random(string range, string from, string to)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Application.Range[range].Formula = $"=RANDBETWEEN({from}, {to})";
+            }
+            catch (Exception) { }
+            return null;
         }
         #endregion
 
