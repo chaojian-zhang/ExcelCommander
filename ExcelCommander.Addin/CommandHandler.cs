@@ -403,6 +403,24 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
+        public CommandData InsertRow(string before)
+        {
+            try
+            {
+                ActiveWorksheet.Rows[before].Insert();
+            }
+            catch (Exception){}
+            return null;
+        }
+        public CommandData InsertColumn(string before)
+        {
+            try
+            {
+                ActiveWorksheet.Columns[before].Insert();
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData Italic(string range)
         {
             try

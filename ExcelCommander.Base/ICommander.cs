@@ -104,6 +104,8 @@ namespace ExcelCommander.Base
         CommandData Fill(string range); // Remark-cz: Alias to Appy()
         CommandData Fill(string from, string to);
         CommandData FillTo(string range, string direction);
+        CommandData InsertRow(string before);
+        CommandData InsertColumn(string before);
         CommandData Paste();
         CommandData Paste(string range);
         CommandData Save();

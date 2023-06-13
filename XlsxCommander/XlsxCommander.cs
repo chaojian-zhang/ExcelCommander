@@ -285,6 +285,14 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
+        public CommandData InsertRow(string before)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData InsertColumn(string before)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData Italic(string range)
         {
             throw new NotImplementedException();

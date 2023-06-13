@@ -1,8 +1,6 @@
 ﻿using ExcelCommander.Base.ClientServer;
 using ExcelCommander.Base.Serialization;
 using ExcelCommander.Base;
-using System;
-using System.Data.Common;
 
 namespace ExcelCommander
 {
@@ -533,6 +531,24 @@ namespace ExcelCommander
             {
                 CommandType = "Development",
                 Contents = $"{nameof(FitAll)}"
+            });
+            return null;
+        }
+        public CommandData InsertRow(string before)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(InsertRow)} {before}"
+            });
+            return null;
+        }
+        public CommandData InsertColumn(string before)
+        {
+            Client.Send(new CommandData
+            {
+                CommandType = "Development",
+                Contents = $"{nameof(InsertColumn)} {before}"
             });
             return null;
         }
