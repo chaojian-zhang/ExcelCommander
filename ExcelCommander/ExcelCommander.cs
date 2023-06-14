@@ -73,7 +73,7 @@ namespace ExcelCommander
                     CommandType = "Development",
                     Contents = command
                 });
-                Console.WriteLine($"[{reply.CommandType}] {reply.Contents}");
+                Console.WriteLine($"[{reply.CommandType}]\n{reply.Contents}");
             }
             else
             {

@@ -35,7 +35,9 @@ namespace ExcelCommander.Base.ClientServer
         public CommandData SendAndReceive(CommandData data)
         {
             ClientInstance.SendAndReceive(ServerReference, data.Serialize(), out byte[] replyData, out int replyLength);
-            return CommandData.Deserialize(replyData, replyLength);
+            var raw = CommandData.Deserialize(replyData, replyLength);
+            raw.ConstructPayloads();
+            return raw;
         }
         public void Close()
         {

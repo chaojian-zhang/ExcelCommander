@@ -37,6 +37,16 @@ namespace ExcelCommander.Addin
             CommandType = "Error",
             Contents = message ?? string.Empty
         };
+        private CommandData Value(double value) => new CommandData()
+        {
+            CommandType = "Value double",
+            Contents = value.ToString()
+        };
+        private CommandData Values(string[] values) => new CommandData()
+        {
+            CommandType = "Value string[]",
+            Contents = string.Join(Environment.NewLine, values)
+        };
         #endregion
 
         #region Entry Point
@@ -103,7 +113,18 @@ namespace ExcelCommander.Addin
         }
         public CommandData GetCell(string row, string col)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return new CommandData()
+                {
+                    CommandType = "Value",
+                    Contents = ActiveWorksheet.Cells[row, col].Value.ToString()
+                };
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData GetCellColor(string cell)
         {
@@ -163,7 +184,18 @@ namespace ExcelCommander.Addin
         }
         public CommandData GetCellValues(string range)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return new CommandData()
+                {
+                    CommandType = "Value",
+                    Contents = ToCSV(ActiveWorksheet.Cells[range].Value2)
+                };
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData GetCurrentSheet()
         {
@@ -179,7 +211,17 @@ namespace ExcelCommander.Addin
         }
         public CommandData GetSheets()
         {
-            throw new NotImplementedException();
+            try
+            {
+                string[] names = Enumerable.Range(1, Application.ActiveWorkbook.Worksheets.Count)   // Remark-cz: Excel index starts at 1
+                    .Select(i => Application.ActiveWorkbook.Worksheets[i].Name as string)
+                    .ToArray();
+                return Values(names);
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData HasNamedRange(string name)
         {

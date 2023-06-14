@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace ExcelCommander.Base.Serialization
@@ -29,7 +31,7 @@ namespace ExcelCommander.Base.Serialization
         }
         #endregion
 
-        #region Helpers
+        #region Routines
         private static void WriteToStream(BinaryWriter writer, CommandData data)
         {
             // Explicitly write string length
@@ -54,6 +56,59 @@ namespace ExcelCommander.Base.Serialization
             data.Contents = Encoding.UTF8.GetString(reader.ReadBytes(contentLength));
 
             return data;
+        }
+        #endregion
+
+        #region Helper
+        public void ConstructPayloads()
+        {
+            switch (CommandType)
+            {
+                case "Value bool":
+                    Payload = (bool)bool.Parse(Contents);
+                    break;
+                case "Value int":
+                    Payload = (int)int.Parse(Contents);
+                    break;
+                case "Value double":
+                    Payload = (double)double.Parse(Contents);
+                    break;
+                case "Value char":
+                    Payload = (char)Contents.First();
+                    break;
+                case "Value string":
+                    Payload = (string)Contents;
+                    break;
+                case "Value bool[]":
+                    Payload = (bool[])Contents
+                        .Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(v => bool.Parse(v))
+                        .ToArray();
+                    break;
+                case "Value int[]":
+                    Payload = (int[])Contents
+                        .Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(v => int.Parse(v))
+                        .ToArray();
+                    break;
+                case "Value double[]":
+                    Payload =(double[])Contents
+                        .Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(v => double.Parse(v))
+                        .ToArray();
+                    break;
+                case "Value char[]":
+                    Payload = (char[])Contents
+                        .Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(v => v.First())
+                        .ToArray();
+                    break;
+                case "Value string[]":
+                    Payload = (string[])Contents.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    break;
+                default:
+                    break;
+            }
         }
         #endregion
     }
