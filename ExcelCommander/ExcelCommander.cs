@@ -279,14 +279,6 @@ namespace ExcelCommander
                 Contents = $"{nameof(GetCellValues)} {cell} {rows} {cols}"
             });
         }
-        public CommandData GetCellValues(string startcell, string endcell)
-        {
-            return Client.SendAndReceive(new CommandData
-            {
-                CommandType = "Development",
-                Contents = $"{nameof(GetCellValues)} {startcell} {endcell}"
-            });
-        }
         public CommandData GetCellValues(string range)
         {
             return Client.SendAndReceive(new CommandData

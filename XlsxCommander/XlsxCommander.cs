@@ -156,10 +156,6 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
-        public CommandData GetCellValues(string startcell, string endcell)
-        {
-            throw new NotImplementedException();
-        }
         public CommandData GetCellValues(string range)
         {
             throw new NotImplementedException();

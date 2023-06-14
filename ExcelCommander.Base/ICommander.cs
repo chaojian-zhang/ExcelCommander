@@ -37,7 +37,6 @@ namespace ExcelCommander.Base
         CommandData GetCellValueFormat(string row, string col);
         CommandData GetCellValues(string cell, string rows, string cols);
         CommandData GetCellValues(string range);
-        CommandData GetCellValues(string startcell, string endcell);
         CommandData GetCurrentSheet();
         CommandData GetSheet(string sheetName);
         CommandData GetSheets();

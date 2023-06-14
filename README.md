@@ -46,6 +46,8 @@ connection.SetCell("A2", "15")
 
 ## Supported Commands
 
+Reading Routines: 
+
 * Get range
 * GetCell cell
 * GetCell row, col
@@ -63,14 +65,14 @@ connection.SetCell("A2", "15")
 * GetCellValueFormat row, col
 * GetCellValues cell, rows, cols
 * GetCellValues range
-* GetCellValues startcell, endcell
-* GetCurrentSheet 
 * GetSheet sheetName
-* GetSheets 
 * GetTable tableName
 * HasNamedRange name
 * HasSheet name
 * HasTable name
+
+Writing Routines: 
+
 * Align range, option
 * Background range, color
 * Bold range
@@ -78,53 +80,70 @@ connection.SetCell("A2", "15")
 * Border range, weight
 * Cell range, value
 * Clear range
-* ClearAll 
 * ClearFormat range
 * Color range, color
 * Color row, col, color
 * CreateSheet sheetName
 * CreateTable range, tableName
 * CSV start, filename
+* DeleteColumn column
+* DeleteColumns columnRange
+* DeleteRow row
+* DeleteRows rowRange
 * Fit range
-* FitAll 
+* Formula cell, equation
+* Formula row, col, equation
 * Italic range
 * Italic range, toggle
 * Merge range
 * MoveSheetBefore sheetName, otherSheetName
 * NameRange range, name
 * Outline range
+* RenameSheet newName
+* RenameSheet originalName, newName
 * SetCell cell, value
 * SetCell row, col, value
 * SetCellName cell, name
 * SetCellName row, col, name
 * SetCellValues start, csv
-* SetEquation cell, equation
-* SetEquation row, col, equation
 * SetFontColor range, color
 * SetFontSize range, size
 * SetValueFormat range, format
+* Width range, width
+* Wrap range
+* Wrap range, toggle
+
+State Management Routines: 
+
 * Select range
 * GoToSheet sheetName
-* Apply 
+
+Macro: 
+
 * Apply range
-* Copy 
-* Duplicate 
-* Fill
 * Fill range
-* Fill range, direction
-* Paste 
+* Fill from, to
+* FillTo range, direction
+* InsertRow before
+* InsertColumn before
 * Paste range
-* Save 
 * Save outputFilePath
-* Sort 
 * Sort range
+
+Programming: 
+
 * Evaluate scriptPath
+
+Utilities: 
+
 * Random range
 * Random range, multiplier
 * Random range, from, to
+
+Finance: 
+
 * ETL range, outputCell
 * ETL range, outputCell, percentage
-
 
 In C#/Python use, call explicit functions through `ExcelCommander` or `XlsxCommander`, or use `ExecuteCommand()` method.
 

@@ -37,10 +37,50 @@ namespace ExcelCommander.Addin
             CommandType = "Error",
             Contents = message ?? string.Empty
         };
+        private CommandData Value(bool value) => new CommandData()
+        {
+            CommandType = "Value bool",
+            Contents = value.ToString()
+        };
+        private CommandData Value(int value) => new CommandData()
+        {
+            CommandType = "Value int",
+            Contents = value.ToString()
+        };
         private CommandData Value(double value) => new CommandData()
         {
             CommandType = "Value double",
             Contents = value.ToString()
+        };
+        private CommandData Value(char value) => new CommandData()
+        {
+            CommandType = "Value char",
+            Contents = value.ToString()
+        };
+        private CommandData Value(string value) => new CommandData()
+        {
+            CommandType = "Value string",
+            Contents = value
+        };
+        private CommandData Values(bool[] values) => new CommandData()
+        {
+            CommandType = "Value bool[]",
+            Contents = string.Join(Environment.NewLine, values)
+        };
+        private CommandData Values(int[] values) => new CommandData()
+        {
+            CommandType = "Value int[]",
+            Contents = string.Join(Environment.NewLine, values)
+        };
+        private CommandData Values(double[] values) => new CommandData()
+        {
+            CommandType = "Value double[]",
+            Contents = string.Join(Environment.NewLine, values)
+        };
+        private CommandData Values(char[] values) => new CommandData()
+        {
+            CommandType = "Value char[]",
+            Contents = string.Join(Environment.NewLine, values)
         };
         private CommandData Values(string[] values) => new CommandData()
         {
@@ -78,13 +118,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                string csv = ToCSV(Application.Range[range].Value2);
-
-                return new CommandData()
-                {
-                    CommandType = "Value",
-                    Contents = csv
-                };
+                return Value(ToCSV(Application.Range[range].Value2));
             }
             catch (Exception e)
             {
@@ -96,13 +130,7 @@ namespace ExcelCommander.Addin
             try
             {
                 if (TryGetRowCol(cell, out int row, out int col))
-                {
-                    return new CommandData()
-                    {
-                        CommandType = "Value",
-                        Contents = ActiveWorksheet.Cells[row, col].Value.ToString()
-                    };
-                }
+                    return Value(ActiveWorksheet.Cells[row, col].Value.ToString());
             }
             catch (Exception e)
             {
@@ -115,11 +143,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                return new CommandData()
-                {
-                    CommandType = "Value",
-                    Contents = ActiveWorksheet.Cells[row, col].Value.ToString()
-                };
+                return Value(ActiveWorksheet.Cells[row, col].Value.ToString());
             }
             catch (Exception e)
             {
@@ -128,7 +152,14 @@ namespace ExcelCommander.Addin
         }
         public CommandData GetCellColor(string cell)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Value(ActiveWorksheet.Range[cell].Interior.Color.ToString());
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData GetCellColor(string row, string col)
         {
@@ -144,19 +175,47 @@ namespace ExcelCommander.Addin
         }
         public CommandData GetCellFormula(string cell)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Value(ActiveWorksheet.Range[cell].Formula);
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData GetCellFormula(string row, string col)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Value(ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Formula);
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
-        public CommandData GetCellName(string cell)
+        public CommandData GetCellName(string range)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Value(ActiveWorksheet.Range[range].Name);
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData GetCellName(string row, string col)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Value(ActiveWorksheet.Range[int.Parse(row), int.Parse(col)].Name);
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData GetCellValueFormat(string cell)
         {
@@ -168,17 +227,27 @@ namespace ExcelCommander.Addin
         }
         public CommandData GetCellValue(string cell)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Value(ActiveWorksheet.Cells[cell].Value2.ToString());
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData GetCellValue(string row, string col)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Value(ActiveWorksheet.Cells[int.Parse(row), int.Parse(col)].Value2.ToString());
+            }
+            catch (Exception e)
+            {
+                return Error(e.Message);
+            }
         }
         public CommandData GetCellValues(string cell, string rows, string cols)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData GetCellValues(string startcell, string endcell)
         {
             throw new NotImplementedException();
         }
@@ -186,11 +255,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                return new CommandData()
-                {
-                    CommandType = "Value",
-                    Contents = ToCSV(ActiveWorksheet.Cells[range].Value2)
-                };
+                return Value(ToCSV(ActiveWorksheet.Cells[range].Value2));
             }
             catch (Exception e)
             {
@@ -233,11 +298,7 @@ namespace ExcelCommander.Addin
         }
         public CommandData HasTable(string name)
         {
-            return new CommandData()
-            {
-                CommandType = "Query Result",
-                Contents = HasWorkSheet(name).ToString()
-            };
+            return Value(HasWorkSheet(name).ToString());
         }
         #endregion
 
