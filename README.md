@@ -61,8 +61,8 @@ Reading Routines:
 * GetCellName row, col
 * GetCellValue cell
 * GetCellValue row, col
-* GetCellValueFormat cell
-* GetCellValueFormat row, col
+* GetNumberFormat range
+* GetNumberFormat row, col
 * GetCellValues cell, rows, cols
 * GetCellValues range
 * GetSheet sheetName
@@ -90,6 +90,8 @@ Writing Routines:
 * DeleteColumns columnRange
 * DeleteRow row
 * DeleteRows rowRange
+* DeleteSheet sheetName
+* Filter tableOrRange, column, values
 * Fit range
 * Formula cell, equation
 * Formula row, col, equation
@@ -98,6 +100,7 @@ Writing Routines:
 * Merge range
 * MoveSheetBefore sheetName, otherSheetName
 * NameRange range, name
+* NumberFormat range, nameOrFormat
 * Outline range
 * RenameSheet newName
 * RenameSheet originalName, newName
@@ -108,7 +111,7 @@ Writing Routines:
 * SetCellValues start, csv
 * SetFontColor range, color
 * SetFontSize range, size
-* SetValueFormat range, format
+* Style range, name
 * Width range, width
 * Wrap range
 * Wrap range, toggle

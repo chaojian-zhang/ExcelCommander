@@ -128,14 +128,6 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
-        public CommandData GetCellValueFormat(string cell)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData GetCellValueFormat(string row, string col)
-        {
-            throw new NotImplementedException();
-        }
         public CommandData GetCellValue(string cell)
         {
             throw new NotImplementedException();
@@ -157,6 +149,14 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData GetCellValues(string range)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetNumberFormat(string cell)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData GetNumberFormat(string row, string col)
         {
             throw new NotImplementedException();
         }
@@ -265,6 +265,14 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
+        public CommandData DeleteSheet(string sheetName)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Filter(string tableOrRange, string column, string values)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData Fit(string range)
         {
             throw new NotFiniteNumberException();
@@ -309,6 +317,10 @@ namespace XlsxCommander
         {
             throw new NotImplementedException();
         }
+        public CommandData NumberFormat(string range, string nameOrFormat)
+        {
+            throw new NotImplementedException();
+        }
         public CommandData Outline(string range)
         {
             throw new NotImplementedException();
@@ -318,10 +330,6 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData RenameSheet(string originalName, string newName)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData SetValueFormat(string range, string format)
         {
             throw new NotImplementedException();
         }
@@ -350,6 +358,10 @@ namespace XlsxCommander
             throw new NotImplementedException();
         }
         public CommandData SetFontColor(string range, string color)
+        {
+            throw new NotImplementedException();
+        }
+        public CommandData Style(string range, string name)
         {
             throw new NotImplementedException();
         }

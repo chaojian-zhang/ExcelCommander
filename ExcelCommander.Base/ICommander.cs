@@ -33,8 +33,8 @@ namespace ExcelCommander.Base
         CommandData GetCellName(string row, string col);
         CommandData GetCellValue(string cell);
         CommandData GetCellValue(string row, string col);
-        CommandData GetCellValueFormat(string cell);
-        CommandData GetCellValueFormat(string row, string col);
+        CommandData GetNumberFormat(string range);
+        CommandData GetNumberFormat(string row, string col);
         CommandData GetCellValues(string cell, string rows, string cols);
         CommandData GetCellValues(string range);
         CommandData GetCurrentSheet();
@@ -65,6 +65,8 @@ namespace ExcelCommander.Base
         CommandData DeleteColumns(string columnRange);
         CommandData DeleteRow(string row);
         CommandData DeleteRows(string rowRange);
+        CommandData DeleteSheet(string sheetName);
+        CommandData Filter(string tableOrRange, string column, string values);
         CommandData Fit(string range);
         CommandData FitAll();
         CommandData Formula(string cell, string equation);
@@ -74,6 +76,7 @@ namespace ExcelCommander.Base
         CommandData Merge(string range);
         CommandData MoveSheetBefore(string sheetName, string otherSheetName);
         CommandData NameRange(string range, string name);
+        CommandData NumberFormat(string range, string nameOrFormat);
         CommandData Outline(string range);
         CommandData RenameSheet(string newName);
         CommandData RenameSheet(string originalName, string newName);
@@ -84,7 +87,7 @@ namespace ExcelCommander.Base
         CommandData SetCellValues(string start, string csv);
         CommandData SetFontColor(string range, string color);
         CommandData SetFontSize(string range, string size);
-        CommandData SetValueFormat(string range, string format);
+        CommandData Style(string range, string name);
         CommandData Width(string range, string width);
         CommandData Wrap(string range);
         CommandData Wrap(string range, string toggle);

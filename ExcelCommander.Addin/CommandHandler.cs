@@ -217,14 +217,6 @@ namespace ExcelCommander.Addin
                 return Error(e.Message);
             }
         }
-        public CommandData GetCellValueFormat(string cell)
-        {
-            throw new NotImplementedException();
-        }
-        public CommandData GetCellValueFormat(string row, string col)
-        {
-            throw new NotImplementedException();
-        }
         public CommandData GetCellValue(string cell)
         {
             try
@@ -265,6 +257,24 @@ namespace ExcelCommander.Addin
         public CommandData GetCurrentSheet()
         {
             throw new NotImplementedException();
+        }
+        public CommandData GetNumberFormat(string cell)
+        {
+            try
+            {
+                return Value(Application.Range[cell].NumberFormat);
+            }
+            catch (Exception) { }
+            return null;
+        }
+        public CommandData GetNumberFormat(string row, string col)
+        {
+            try
+            {
+                return Value(Application.Cells[int.Parse(row), int.Parse(col)].NumberFormat);
+            }
+            catch (Exception) { }
+            return null;
         }
         public CommandData GetTable(string tableName)
         {
@@ -473,6 +483,21 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
+        public CommandData DeleteSheet(string sheetName)
+        {
+            GetWorkSheet(ParseString(sheetName)).Delete();
+            return null;
+        }
+
+        public CommandData Filter(string tableOrRange, string column, string values)
+        {
+            try
+            {
+                ActiveWorksheet.ListObjects[tableOrRange].Range.AutoFilter(int.Parse(column), values.Split(','), XlAutoFilterOperator.xlFilterValues);
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData Fit(string range)
         {
             try
@@ -569,6 +594,15 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
+        public CommandData NumberFormat(string range, string nameOrFormat)
+        {
+            try
+            {
+                Application.Range[range].NumberFormat = nameOrFormat; // Remark-cz: Text or NumberFormat?
+            }
+            catch (Exception) { }
+            return null;
+        }
         public CommandData Outline(string range)
         {
             try
@@ -661,11 +695,11 @@ namespace ExcelCommander.Addin
             catch (Exception) { }
             return null;
         }
-        public CommandData SetValueFormat(string range, string format)
+        public CommandData Style(string range, string name)
         {
             try
             {
-                Application.Range[range].NumberFormat = format; // Remark-cz: Text or NumberFormat?
+                Application.Range[range].Style = Application.ActiveWorkbook.Styles[name];
             }
             catch (Exception) { }
             return null;
