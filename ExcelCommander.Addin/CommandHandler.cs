@@ -699,7 +699,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                Application.Range[range].Style = Application.ActiveWorkbook.Styles[name];
+                Application.Range[range].Style = Application.ActiveWorkbook.Styles[ParseString(name)];
             }
             catch (Exception) { }
             return null;
