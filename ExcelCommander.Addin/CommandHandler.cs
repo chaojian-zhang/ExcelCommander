@@ -247,7 +247,7 @@ namespace ExcelCommander.Addin
         {
             try
             {
-                return Value(ToCSV(ActiveWorksheet.Cells[range].Value2));
+                return Value(ToCSV(ActiveWorksheet.Range[range].Value2));
             }
             catch (Exception e)
             {
